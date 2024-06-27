@@ -1,0 +1,36 @@
+// frontend/src/pages/AboutMePage/AboutMePage.module.scss
+@import '../../styles/media';
+@import '../../styles/variables';
+
+.aboutPage {
+	max-width: 1440px;
+	padding: 100px 70px 20px 70px;
+	margin: 0 auto;
+}
+
+.aboutPage__content {
+	max-width: 1440px;
+	margin: auto;
+	display: grid;
+	grid-template-columns: 1fr 350px;
+	grid-template-rows: auto 1fr;
+	gap: 20px;
+}
+
+.aboutPage__left {
+	grid-row: 1 / span 2;
+}
+
+.aboutPage__photo img {
+	max-width: 100%;
+	height: auto;
+	border-radius: 10px;
+	background: center / cover;
+}
+
+.post {
+	display: block;
+	width: 100%;
+	grid-column: 1 / -1;
+}
+

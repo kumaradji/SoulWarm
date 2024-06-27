@@ -1,0 +1,39 @@
+@import '../../../styles/media';
+@import '../../../styles/variables';
+
+.masterclass {
+	display: flex;
+}
+
+.sidebar {
+	padding: 90px 0 0 0;
+}
+
+.chapterList {
+	list-style-type: none;
+	padding: 0;
+}
+
+.chapterList li {
+	margin-bottom: 10px;
+	font-size: 18px;
+}
+
+.chapterList li a {
+	text-decoration: none;
+	color: var(--color-black);
+}
+
+.chapterList li a:hover {
+	text-decoration: underline;
+}
+
+.activeChapter a {
+	color: var(--color-blue);
+	font-weight: bold;
+}
+
+.chapterContent {
+	width: 67%;
+	padding: 20px;
+}

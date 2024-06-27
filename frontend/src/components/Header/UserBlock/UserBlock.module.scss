@@ -1,0 +1,107 @@
+// UserBlock.module.scss
+@import '../../../styles/media';
+@import '../../../styles/variables';
+@import '../../../styles/mixins';
+
+.userBlock {
+	display: flex;
+	justify-content: space-evenly;
+	align-items: center;
+	min-width: 280px;
+}
+
+.userInfo {
+	display: flex;
+	justify-content: flex-end;
+	flex: 0 0 auto;
+	min-width: 100px;
+	height: 32px;
+	align-items: center;
+}
+
+.userInfo__details {
+	display: flex;
+	flex-direction: row; /* Изменено на горизонтальное расположение */
+	align-items: center; /* Центрируем элементы по вертикали */
+	margin-right: 2px;
+	width: 100%;
+}
+
+.userInfo__userName {
+	opacity: 0.7;
+	font-size: 18px;
+	margin-right: 8px; /* Добавляем отступ справа от имени пользователя */
+}
+
+.userInfo__logout {
+	font-size: 10px;
+	opacity: 0.4;
+}
+
+.userInfo__userIcon {
+	width: 40px;
+	height: 40px;
+	opacity: 0.7;
+	border-radius: 50%;
+	animation: spin 10s linear infinite;
+}
+
+.logoutButton {
+	width: 75px;
+	height: 30px;
+	border-radius: 12px;
+	box-shadow: 0 0 10px 0 #00000033;
+	background-color: var(--color-blue);
+	font-family: 'Montserrat', sans-serif;
+	color: var(--color-main);
+	font-size: 15px;
+}
+
+.logoutButton:hover {
+	cursor: pointer;
+	background-color: var(--color-red);
+	color: var(--color-main);
+}
+
+.loginButton {
+	@include button-header
+}
+
+
+@keyframes spin {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+.loadingIcon {
+	width: 34px;
+	height: 34px;
+	opacity: 0.5;
+	animation: spin 2s linear infinite;
+}
+
+.login {
+	opacity: 0.5;
+}
+
+.login:hover {
+	opacity: 1;
+}
+
+.vertical-divider {
+	box-sizing: content-box;
+	flex: 0 0 2px;
+	height: 26px;
+	background-color: var(--color-green);
+	border: none;
+	opacity: 0.6;
+	margin-right: 20px;
+	margin-left: 20px;
+	z-index: 1;
+}
+
+

@@ -1,0 +1,23 @@
+// Navbar.module.scss
+
+.navbar {
+    display: flex;
+    flex: 0 0 650px;
+    font-family: Montserrat, sans-serif;
+    font-size: 16px;
+    text-transform: uppercase;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.navbar a {
+    color: var(--color-white);
+    text-decoration: none;
+    margin-right: 20px;
+    transition: opacity 0.3s ease;
+}
+
+.navbar a:hover {
+    opacity: 0.5;
+}

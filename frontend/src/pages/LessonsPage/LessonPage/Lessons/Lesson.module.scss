@@ -1,0 +1,22 @@
+// Lesson.module.scss
+
+p {
+	margin-bottom: 20px;
+	line-height: 1.2;
+}
+
+.lesson {
+	text-align: center;
+}
+
+.lesson__content {
+	margin: 0 auto;
+	max-width: 800px;
+}
+
+.sliderContainer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 20px;
+}

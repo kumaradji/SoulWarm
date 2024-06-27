@@ -1,0 +1,37 @@
+// LessonPage.module.scss
+@import '../../../styles/media';
+@import '../../../styles/variables';
+
+.lesson {
+	max-width: 1440px;
+	padding: 110px 70px 0 70px;
+	margin: 0 auto;
+	text-align: left;
+
+	h1 {
+		margin-bottom: 2rem;
+		text-align: center;
+	}
+
+	&__content {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		padding: 20px 60px 30px 60px;
+		max-width: 1440px;
+		margin: 0 auto;
+
+		p {
+			text-align: left;
+			width: 100%;
+		}
+
+		video {
+			width: 100%;
+			max-width: 600px;
+			height: auto;
+			margin: 20px auto;
+			display: block;
+		}
+	}
+}
