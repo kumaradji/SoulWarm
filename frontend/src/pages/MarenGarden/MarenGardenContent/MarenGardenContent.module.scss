@@ -1,0 +1,64 @@
+@import '../../../styles/media';
+@import '../../../styles/variables';
+
+.content {
+	display: flex;
+	max-width: 1440px;
+	padding: 110px 70px 0 70px;
+	margin: 0 auto;
+	text-align: left;
+}
+
+.sidebar {
+	width: 33.33%; // Одна треть ширины
+	padding: 20px;
+
+	ul {
+		list-style: none;
+		padding: 0;
+
+		li {
+			cursor: pointer;
+			padding: 5px 10px; // Уменьшен padding
+			font-size: 1.2rem; // Уменьшен размер шрифта
+			&:hover {
+				background-color: var(--color-light-grey);
+			}
+		}
+	}
+
+	.activeChapter {
+		background-color: var(--color-main);
+		font-weight: bold;
+	}
+}
+
+.chapterContent {
+	width: 66.67%; // Две трети ширины
+	padding: 20px;
+
+	h2 {
+		margin-bottom: 20px;
+	}
+}
+
+.contentContainer {
+	display: flex;
+	align-items: flex-start; /* Выравнивание по верхнему краю */
+	gap: 20px; /* Расстояние между текстом и изображением */
+}
+
+.textContent {
+	flex: 1; /* Занимает оставшееся пространство */
+}
+
+.imageContent {
+	flex: 0 0 auto; /* Фиксированная ширина */
+	max-width: 500px;
+	margin-top: 40px;
+}
+
+.imageContent img {
+	width: 100%;
+	height: auto; /* Сохранение пропорций изображения */
+}

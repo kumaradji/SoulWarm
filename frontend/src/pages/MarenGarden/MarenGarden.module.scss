@@ -7,15 +7,6 @@
 	margin: 0 auto;
 	text-align: left;
 
-	.chapterList {
-		width: 33.33%; // Занимает одну треть ширины
-	}
-
-	.chapterContent {
-		width: 66.67%; // Занимает две трети ширины
-		padding-left: 20px; // Добавляем отступ слева для разделения контента
-	}
-
 	h2 {
 		margin-bottom: 2rem;
 		text-align: center;
@@ -80,39 +71,6 @@
 			height: auto;
 		}
 	}
-}
-
-.content {
-	display: flex;
-	max-width: 1440px;
-	padding: 110px 70px 0 70px;
-	margin: 0 auto;
-	text-align: left;
-}
-
-.chapterContent {
-
-}
-
-.contentContainer {
-	display: flex;
-	align-items: flex-start; /* Выравнивание по верхнему краю */
-	gap: 20px; /* Расстояние между текстом и изображением */
-}
-
-.textContent {
-	flex: 1; /* Занимает оставшееся пространство */
-}
-
-.imageContent {
-	flex: 0 0 auto; /* Фиксированная ширина */
-	max-width: 500px;
-	margin-top: 40px;
-}
-
-.imageContent img {
-	width: 100%;
-	height: auto; /* Сохранение пропорций изображения */
 }
 
 .masterclass__11, .masterclass__10, .masterclass__13 {

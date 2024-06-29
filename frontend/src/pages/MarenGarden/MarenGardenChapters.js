@@ -1,15 +1,16 @@
 import React from 'react';
 import styles from './MarenGarden.module.scss';
+import {Link} from "react-router-dom";
 
 const marenGardenChapters = [
   {
     id: 1,
     title: '1. Введение.',
     content: (
-      <div>
+      <div key="chapter-1">
         <h2>1. Введение.</h2>
         <div className={styles.masterclass__videoContainer}>
-          <video controls>
+          <video controls key="video-1">
             <source
               src="/videos/marengarden/Vvedenie.mp4"
               type="video/mp4"
@@ -24,10 +25,10 @@ const marenGardenChapters = [
     id: 2,
     title: '2. Очистка ткани от аппрета',
     content: (
-      <div>
+      <div key="chapter-2">
         <h2>2. Очистка ткани от аппрета</h2>
         <div className={styles.masterclass__videoContainer}>
-          <video controls>
+          <video controls key="video-2">
             <source
               src="/videos/marengarden/Ochistka_tkani_ot_opreta.mp4"
               type="video/mp4"
@@ -42,10 +43,10 @@ const marenGardenChapters = [
     id: 3,
     title: '3. Протравливание',
     content: (
-      <div>
+      <div key="chapter-3">
         <h2>3. Протравливание</h2>
         <div className={styles.masterclass__videoContainer}>
-          <video controls>
+          <video controls key="video-3">
             <source
               src="/videos/marengarden/Protravlivanie.mp4"
               type="video/mp4"
@@ -60,10 +61,10 @@ const marenGardenChapters = [
     id: 4,
     title: '4. Приготовление экстракта марены',
     content: (
-      <div>
+      <div key="chapter-4">
         <h2>4. Приготовление экстракта марены</h2>
         <div className={styles.masterclass__videoContainer}>
-          <video controls>
+          <video controls key="video-4">
             <source
               src="/videos/marengarden/Prigotovlenie_ekstrakta_mareni.mp4"
               type="video/mp4"
@@ -78,10 +79,10 @@ const marenGardenChapters = [
     id: 5,
     title: '5. Подготовка железного одеяла',
     content: (
-      <div>
+      <div key="chapter-5">
         <h2>5. Подготовка железного одеяла</h2>
         <div className={styles.masterclass__videoContainer}>
-          <video controls>
+          <video controls key="video-5">
             <source
               src="/videos/marengarden/Podgotovka_zeleznogo_odeyala.mp4"
               type="video/mp4"
@@ -96,10 +97,10 @@ const marenGardenChapters = [
     id: 6,
     title: '6. Мареновый сад. Процесс окрашивания.',
     content: (
-      <div>
+      <div key="chapter-6">
         <h2>6. Мареновый сад. Процесс окрашивания.</h2>
         <div className={styles.masterclass__videoContainer}>
-          <video controls>
+          <video controls key="video-6">
             <source
               src="/videos/marengarden/Process_okrashivaniya.mp4"
               type="video/mp4"
@@ -114,10 +115,10 @@ const marenGardenChapters = [
     id: 7,
     title: '7. Льняная скатерть (бонус).',
     content: (
-      <div>
+      <div key="chapter-7">
         <h2>7. Льняная скатерть (бонус).</h2>
         <div className={styles.masterclass__videoContainer}>
-          <video controls>
+          <video controls key="video-7">
             <source
               src="/videos/marengarden/Lnanaya_skatert_bonus.mp4"
               type="video/mp4"
@@ -132,10 +133,10 @@ const marenGardenChapters = [
     id: 8,
     title: '8. Исправляем ошибки (бонус).',
     content: (
-      <div>
+      <div key="chapter-8">
         <h2>8. Исправляем ошибки (бонус).</h2>
         <div className={styles.masterclass__videoContainer}>
-          <video controls>
+          <video controls key="video-8">
             <source
               src="/videos/marengarden/Ispravlyaem_oshibki_bonus.mp4"
               type="video/mp4"
@@ -150,10 +151,10 @@ const marenGardenChapters = [
     id: 9,
     title: '9. Приготовление раствора индиго.',
     content: (
-      <div>
+      <div key="chapter-9">
         <h2>9. Приготовление раствора индиго.</h2>
         <div className={styles.masterclass__videoContainer}>
-          <video controls>
+          <video controls key="video-9">
             <source
               src="/videos/marengarden/Prigotovlenie_rastvora_indigo.mp4"
               type="video/mp4"
@@ -238,10 +239,10 @@ const marenGardenChapters = [
     id: 12,
     title: '12. Обработка листьев танинами.',
     content: (
-      <div>
+      <div key="chapter-12">
         <h2>12. Обработка листьев танинами.</h2>
         <div className={styles.masterclass__videoContainer}>
-          <video controls>
+          <video controls key="video-12">
           <source
               src="/videos/marengarden/Obrabotka_listyev_taninami.mp4"
               type="video/mp4"
@@ -257,27 +258,26 @@ const marenGardenChapters = [
     title: '13. Конспекты.',
     content: (
       <div>
-        <h2>13. Конспекты.</h2>
-        <div className={styles.masterclass__13__contentContainer}>
-          <div className={styles.masterclass__13__textContent}>
-            <h2>Конспект "Цветной фон"</h2>
-            <div className={styles.masterclass__13__iframeContainer}>
-              <iframe src="https://drive.google.com/file/d/1HwMy7gnpbNqDNwwYKAFkgegMJnwyjp0K/preview" allow="autoplay"></iframe>
-            </div>
-            <p>Скачайте файл, нажав на кнопку ниже.</p>
-            <a href="https://drive.google.com/uc?export=download&id=1HwMy7gnpbNqDNwwYKAFkgegMJnwyjp0K" className={styles.masterclass__13__downloadButton} download>Скачать конспект "Цветной фон"</a>
-
-            <h2>Конспект "Цветной фон"</h2>
-            <div className={styles.masterclass__13__iframeContainer}>
-              <iframe src="https://drive.google.com/file/d/16n-r79FSDTSoo2bt2c2_kcwrQmLcHnaC/preview" allow="autoplay"></iframe>
-            </div>
-            <p>Скачайте файл, нажав на кнопку ниже.</p>
-            <a href="https://drive.google.com/uc?export=download&id=16n-r79FSDTSoo2bt2c2_kcwrQmLcHnaC" className={styles.masterclass__13__downloadButton} download>Скачать конспект "Цветной фон"</a>
-          </div>
-        </div>
+        <Link
+          to="/conspects"
+          style={{
+            display: 'inline-block',
+            marginTop: '10px',
+            padding: '10px 20px',
+            backgroundColor: 'var(--color-blue)',
+            color: 'var(--color-white)',
+            textAlign: 'center',
+            textDecoration: 'none',
+            borderRadius: '5px',
+            transition: 'background-color 0.3s'
+          }}
+          className="conspect-button"
+        >
+          Посмотреть и скачать конспекты
+        </Link>
       </div>
     ),
-  },
+  }
 ]
 
 export default marenGardenChapters;

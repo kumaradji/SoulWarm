@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { useAuth } from './context/AuthContext';
+import React, {useState, useEffect} from 'react';
+import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+import {useAuth} from './context/AuthContext';
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 
 import Header from './components/Header/Header';
@@ -14,7 +14,7 @@ import GalleryPage from './pages/GalleryPage/GalleryPage';
 import LandingPage from './pages/LandingPage/LandingPage';
 import LessonPage from './pages/LessonsPage/LessonPage/LessonPage';
 import MarenGarden from './pages/MarenGarden/MarenGarden';
-import MarenGardenContent from './pages/MarenGarden/MarenGardenContent';
+import MarenGardenContent from './pages/MarenGarden/MarenGardenContent/MarenGardenContent';
 import GalleryList from './pages/GalleryPage/GalleriesList/GalleryList';
 import PromoPage from "./pages/MarenGarden/PromoPage/PromoPage";
 import ProductDetail from "./pages/ShopPage/ProductDetail/ProductDetail";
@@ -27,9 +27,10 @@ import marenGardenChapters from './pages/MarenGarden/MarenGardenChapters';
 import './styles/styles.scss';
 import CartButton from "./pages/ShopPage/CartButton/CartButton";
 import CartPage from "./pages/ShopPage/CartPage/CartPage";
+import ConspectPage from "./pages/MarenGarden/MarenGardenContent/ConspectPage/ConspectPage";
 
 function App() {
-  const { isLoggedIn, checkAuthStatus, user } = useAuth();
+  const {isLoggedIn, checkAuthStatus, user} = useAuth();
   const [userName, setUserName] = useState('');
   const [cartCount, setCartCount] = useState(0);
 
@@ -51,29 +52,34 @@ function App() {
     <Router>
       <div className="app-container">
         <div className="content">
-          <Header isLoggedIn={isLoggedIn} userName={userName} setUserName={setUserName} />
-          <CartButton cartCount={cartCount} updateCartCount={updateCartCount} />
+          <Header isLoggedIn={isLoggedIn} userName={userName} setUserName={setUserName}/>
+          <CartButton cartCount={cartCount} updateCartCount={updateCartCount}/>
           <Routes>
-            <Route path="/" element={<LandingPage />} />
-            <Route path="/auth" element={<Authorization />} />
-            <Route path="/change-password" element={<ChangePassword />} />
-            <Route path="/profile" element={isLoggedIn ? <Profile /> : <Authorization redirectBack="/profile" />} />
-            <Route path="/lessons" element={<LessonsPage />} />
-            <Route path="/lesson/:lessonId" element={<LessonPage />} />
-            <Route path="/about" element={<AboutMePage />} />
-            <Route path="/promo" element={<PromoPage />} />
-            <Route path="/masterclass" element={<PrivateRoute element={<MarenGarden marenGardenChapters={marenGardenChapters} />} requiredGroup="VIP" />} />
-            <Route path="/masterclass/:chapterId" element={<PrivateRoute element={<MarenGardenContent marenGardenChapters={marenGardenChapters} />} requiredGroup="VIP" />} />
-            <Route path="/shop" element={<ShopPage />} />
-            <Route path="/cart" element={<CartPage />} />
-            <Route path="/product/:productId" element={<ProductDetail updateCartCount={updateCartCount} />} />
-            <Route path="/gallery/:galleryId" element={<GalleryPage />} />
-            <Route path="/gallery" element={<GalleryList galleries={galleries} />} />
-            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/" element={<LandingPage/>}/>
+            <Route path="/auth" element={<Authorization/>}/>
+            <Route path="/change-password" element={<ChangePassword/>}/>
+            <Route path="/profile" element={isLoggedIn ? <Profile/> : <Authorization redirectBack="/profile"/>}/>
+            <Route path="/lessons" element={<LessonsPage/>}/>
+            <Route path="/lesson/:lessonId" element={<LessonPage/>}/>
+            <Route path="/about" element={<AboutMePage/>}/>
+            <Route path="/promo" element={<PromoPage/>}/>
+            <Route path="/masterclass"
+                   element={<PrivateRoute element={<MarenGarden marenGardenChapters={marenGardenChapters}/>}
+                                          requiredGroup="VIP"/>}/>
+            <Route path="/masterclass/:chapterId"
+                   element={<PrivateRoute element={<MarenGardenContent marenGardenChapters={marenGardenChapters}/>}
+                                          requiredGroup="VIP"/>}/>
+            <Route path="/conspects" element={<PrivateRoute element={<ConspectPage />} requiredGroup="VIP" />} />
+            <Route path="/shop" element={<ShopPage/>}/>
+            <Route path="/cart" element={<CartPage/>}/>
+            <Route path="/product/:productId" element={<ProductDetail updateCartCount={updateCartCount}/>}/>
+            <Route path="/gallery/:galleryId" element={<GalleryPage/>}/>
+            <Route path="/gallery" element={<GalleryList galleries={galleries}/>}/>
+            <Route path="/privacy-policy" element={<PrivacyPolicy/>}/>
           </Routes>
-          <ChatButton />
+          <ChatButton/>
         </div>
-        <Footer />
+        <Footer/>
       </div>
     </Router>
   );

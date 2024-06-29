@@ -39,6 +39,7 @@ VIP_TELEGRAM_CHAT_ID = env('VIP_TELEGRAM_CHAT_ID')
 # Настройки для General Telegram бота
 GENERAL_TELEGRAM_BOT_TOKEN = env('GENERAL_TELEGRAM_BOT_TOKEN')
 GENERAL_TELEGRAM_CHAT_ID = env('GENERAL_TELEGRAM_CHAT_ID')
+ADMIN_USER_ID = 707268574
 
 # Настройки для Django
 SECRET_KEY = 'django-insecure-xc7xublqj_u6jh&$+++e-yrsm$8ma*x_^4gxe%upd=-f7)1h_x'

@@ -27,6 +27,8 @@ logger = logging.getLogger(__name__)
 
 @method_decorator(csrf_exempt, name='dispatch')
 class TelegramWebhookView(View):
+    ADMIN_USER_ID = 707268574
+
     def post(self, request, *args, **kwargs):
         try:
             data = json.loads(request.body)
@@ -36,6 +38,8 @@ class TelegramWebhookView(View):
                 chat_id = message['chat']['id']
                 text = message.get('text')
                 message_id = message.get('message_id')  # Get the message ID
+                user_id = message['from']['id']
+                user_name = message['from'].get('username', 'Unknown')
                 if text:
                     # Check for duplicate message
                     if Message.objects.filter(message_id=message_id).exists():
@@ -43,10 +47,11 @@ class TelegramWebhookView(View):
 
                     # Save the message if it's not from a bot and not a duplicate
                     if not message.get('from', {}).get('is_bot'):
+                        is_admin = user_id == self.ADMIN_USER_ID
                         Message.objects.create(
-                            user_name=message['from']['username'],
+                            user_name=user_name,
                             content=text,
-                            is_admin=False,
+                            is_admin=is_admin,
                             message_id=message_id
                         )
                         return JsonResponse({"status": "ok"})
