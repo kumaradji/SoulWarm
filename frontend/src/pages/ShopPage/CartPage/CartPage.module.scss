@@ -4,25 +4,138 @@
 @import '../../../styles/mixins';
 
 .cartPage {
-	max-width: 1440px;
 	display: flex;
+	flex-direction: column;
+	align-items: center;
+	max-width: 1440px;
 	padding: 110px 70px 20px 70px;
 	margin: 0 auto;
 
-
 	h1 {
 		margin-bottom: 20px;
+		font-size: 2rem;
+		color: var(--color-black);
 	}
 
-	ul {
-		list-style-type: none;
-		padding: 0;
+	.cartContainer {
+		display: flex;
+		width: 100%;
+		max-width: 1200px;
+		gap: 20px;
+	}
 
-		li {
-			margin-bottom: 20px;
-			padding: 10px;
-			border: 1px solid #ccc;
+	.cartItems {
+		flex: 2;
+		display: flex;
+		flex-direction: column;
+		gap: 20px;
+	}
+
+	.cartItem {
+		display: flex;
+		align-items: center;
+		color: var(--color-black);
+		border-radius: 10px;
+		background: var(--color-light-main);
+		box-shadow: var(--box-shadow);
+		padding: 20px;
+		position: relative;
+
+		.cartItemImage {
+			width: 200px;
+			height: auto;
+			border-radius: 10px;
+			margin-right: 20px;
+
+			img {
+				width: 100%;
+				height: auto;
+				border-radius: 10px;
+			}
+		}
+
+		.cartItemDetails {
+			flex: 1;
+			display: flex;
+			flex-direction: column;
+
+			h2 {
+				font-size: 1.5rem;
+				margin-bottom: 10px;
+			}
+
+			h4 {
+				font-size: 1rem;
+				margin-bottom: 10px;
+			}
+
+			.cartItemPrice {
+				font-size: 1.2rem;
+				font-weight: bold;
+				margin-left: auto;
+				text-align: right;
+
+				p {
+					margin-bottom: 10px;
+				}
+
+				.removeButton {
+					background-color: var(--color-red);
+					color: var(--color-white);
+					border: none;
+					border-radius: 5px;
+					padding: 10px 20px;
+					cursor: pointer;
+					transition: background-color 0.3s;
+
+					&:hover {
+						background-color: var(--color-dark-red);
+					}
+				}
+			}
+		}
+	}
+
+	.cartSummary {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-end;
+		gap: 10px;
+		border: 1px solid #eee;
+		padding: 20px;
+		border-radius: 10px;
+		background-color: #f9f9f9;
+
+		.checkoutButton, .buyInOneClickButton {
+			padding: 10px 20px;
+			border: none;
 			border-radius: 5px;
+			cursor: pointer;
+			background-color: var(--color-black);
+			color: var(--color-white);
+			margin-top: 10px;
+		}
+
+		.checkoutButton {
+			background-color: var(--color-grey);
+		}
+
+		.buyInOneClickButton {
+			background-color: var(--color-dark-grey);
+		}
+
+		.summaryDetails {
+			display: flex;
+			flex-direction: column;
+			align-items: flex-end;
+			width: 100%;
+			gap: 5px;
+
+			p {
+				margin: 0;
+				font-size: 1rem;
+			}
 		}
 	}
 }

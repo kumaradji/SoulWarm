@@ -83,7 +83,7 @@ const ShopPage = () => {
                     )}
                   </div>
                   <h3 className={styles.productTitle}>{product.title}</h3>
-                  <p className={styles.productDescription}>{product.description}</p>  {/* Используем поле description */}
+                  <p className={styles.productDescription}>{product.description}</p>
                   <p className={styles.productPrice}>Цена: {product.price} руб.</p>
                   <button className={styles.productButton}>ПОДРОБНЕЕ</button>
                 </Link>

@@ -19,9 +19,15 @@ class VIPMessageSerializer(serializers.ModelSerializer):
 
 
 class EcoStaffImageSerializer(serializers.ModelSerializer):
+    image = serializers.SerializerMethodField()
+
     class Meta:
         model = EcoStaffImage
         fields = ['image']
+
+    def get_image(self, obj):
+        request = self.context.get('request')
+        return request.build_absolute_uri(obj.image.url)
 
 
 class EcoStaffSerializer(serializers.ModelSerializer):
