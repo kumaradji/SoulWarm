@@ -3,7 +3,7 @@
 
 .masterclass {
 	max-width: 1440px;
-	padding: 110px 70px 0 70px;
+	padding: 110px 70px 30px 70px;
 	margin: 0 auto;
 	text-align: left;
 
@@ -23,39 +23,66 @@
 		margin: 0 auto;
 		display: grid;
 		grid-template-columns: repeat(2, 1fr);
-		grid-gap: 2rem;
+		grid-gap: 1rem;
 		justify-content: center;
 		align-items: center;
 	}
 
 	.chapter {
+		width: 570px;
 		display: flex;
 		flex-direction: column;
-		text-align: center;
+		text-align: left; /* Выравнивание текста по левому краю */
 		color: var(--color-black);
-		border-radius: 10px;
-		background: var(--color-light-main);
+		border-radius: 5px;
+		background: var(--color-light-green);
 		box-shadow: var(--box-shadow);
-		padding: 1rem;
+		padding: 0.7rem;
 		text-decoration: none;
+		cursor: pointer;
+		position: relative; /* Для позиционирования .chapterNumber */
+
+		.chapterNumber {
+			position: absolute;
+			left: -20px;
+			top: 50%;
+			transform: translateY(-50%);
+			-webkit-backdrop-filter: blur(10px);
+			backdrop-filter: blur(10px);
+			width: 55px;
+			height: 55px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			border-radius: 5px;
+			font-family: LetteraTrentadue, sans-serif;
+			font-size: 2rem;
+			color: var(--color-red);
+			box-shadow: var(--box-shadow);
+		}
+	}
+
+	.chapterContent {
+		margin-left: 60px;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start; /* Выравнивание по левому краю */
+		text-align: left; /* Выравнивание текста по левому краю */
 
 		h3 {
 			font-size: 1.5rem;
 			margin-bottom: 1rem;
 		}
 
-		p {
-			margin-bottom: 1rem;
-		}
-
-		.link {
-			color: var(--color-blue);
-			text-decoration: none;
-			font-family: Montserrat, sans-serif;
-			font-size: 1.2rem;
-			font-weight: 500;
-			margin-top: auto;
-		}
+		//.link {
+		//	color: var(--color-blue);
+		//	text-decoration: none;
+		//	font-family: Montserrat, sans-serif;
+		//	font-size: 1.2rem;
+		//	font-weight: 500;
+		//	margin-top: auto;
+		//	width: 100%;
+		//}
 	}
 
 	&__videoContainer {
@@ -101,7 +128,7 @@
 	&__imageContent {
 		display: flex;
 		justify-content: space-between; /* Распределение изображений по горизонтали */
-		gap: 10px; /* Зазор между изображениями */
+		gap: 20px; /* Зазор между изображениями */
 	}
 
 	&__imageContent img {
@@ -124,18 +151,20 @@
 			background-color: var(--color-red);
 		}
 	}
+}
 
-	&__videoContainer {
-		display: flex;
-		justify-content: center; /* Центрирование по горизонтали */
-		align-items: center; /* Центрирование по вертикали */
-		padding: 20px 60px 30px 60px;
-		max-width: 1000px;
-		margin: 0 auto; /* Центрирование контейнера */
+.imageContent {
+	display: flex;
+	justify-content: space-between;
+	gap: 10px;
 
-		video {
-			width: 100%;
-			height: auto;
-		}
+	& img {
+		width: calc(50% - 5px);
+		height: auto;
 	}
+}
+
+.link {
+	color: var(--color-black);
+	text-decoration: none;
 }

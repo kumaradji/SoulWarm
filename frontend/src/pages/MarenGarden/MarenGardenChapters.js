@@ -5,10 +5,10 @@ import {Link} from "react-router-dom";
 const marenGardenChapters = [
   {
     id: 1,
-    title: '1. Введение.',
+    title: 'Введение',
     content: (
       <div key="chapter-1">
-        <h2>1. Введение.</h2>
+        <h2>Введение</h2>
         <div className={styles.masterclass__videoContainer}>
           <video controls key="video-1">
             <source
@@ -23,10 +23,10 @@ const marenGardenChapters = [
   },
   {
     id: 2,
-    title: '2. Очистка ткани от аппрета',
+    title: 'Очистка ткани от аппрета',
     content: (
       <div key="chapter-2">
-        <h2>2. Очистка ткани от аппрета</h2>
+        <h2>Очистка ткани от аппрета</h2>
         <div className={styles.masterclass__videoContainer}>
           <video controls key="video-2">
             <source
@@ -41,10 +41,10 @@ const marenGardenChapters = [
   },
   {
     id: 3,
-    title: '3. Протравливание',
+    title: 'Протравливание',
     content: (
       <div key="chapter-3">
-        <h2>3. Протравливание</h2>
+        <h3>Протравливание</h3>
         <div className={styles.masterclass__videoContainer}>
           <video controls key="video-3">
             <source
@@ -59,10 +59,10 @@ const marenGardenChapters = [
   },
   {
     id: 4,
-    title: '4. Приготовление экстракта марены',
+    title: 'Приготовление экстракта марены',
     content: (
       <div key="chapter-4">
-        <h2>4. Приготовление экстракта марены</h2>
+        <h3>Приготовление экстракта марены</h3>
         <div className={styles.masterclass__videoContainer}>
           <video controls key="video-4">
             <source
@@ -77,10 +77,10 @@ const marenGardenChapters = [
   },
   {
     id: 5,
-    title: '5. Подготовка железного одеяла',
+    title: 'Подготовка железного одеяла',
     content: (
       <div key="chapter-5">
-        <h2>5. Подготовка железного одеяла</h2>
+        <h3>Подготовка железного одеяла</h3>
         <div className={styles.masterclass__videoContainer}>
           <video controls key="video-5">
             <source
@@ -95,10 +95,10 @@ const marenGardenChapters = [
   },
   {
     id: 6,
-    title: '6. Мареновый сад. Процесс окрашивания.',
+    title: 'Мареновый сад. Процесс окрашивания',
     content: (
       <div key="chapter-6">
-        <h2>6. Мареновый сад. Процесс окрашивания.</h2>
+        <h3>Мареновый сад. Процесс окрашивания</h3>
         <div className={styles.masterclass__videoContainer}>
           <video controls key="video-6">
             <source
@@ -113,10 +113,10 @@ const marenGardenChapters = [
   },
   {
     id: 7,
-    title: '7. Льняная скатерть (бонус).',
+    title: 'Льняная скатерть (бонус)',
     content: (
       <div key="chapter-7">
-        <h2>7. Льняная скатерть (бонус).</h2>
+        <h3>Льняная скатерть (бонус)</h3>
         <div className={styles.masterclass__videoContainer}>
           <video controls key="video-7">
             <source
@@ -131,10 +131,10 @@ const marenGardenChapters = [
   },
   {
     id: 8,
-    title: '8. Исправляем ошибки (бонус).',
+    title: 'Исправляем ошибки (бонус)',
     content: (
       <div key="chapter-8">
-        <h2>8. Исправляем ошибки (бонус).</h2>
+        <h3>Исправляем ошибки (бонус)</h3>
         <div className={styles.masterclass__videoContainer}>
           <video controls key="video-8">
             <source
@@ -149,10 +149,10 @@ const marenGardenChapters = [
   },
   {
     id: 9,
-    title: '9. Приготовление раствора индиго.',
+    title: 'Приготовление раствора индиго',
     content: (
       <div key="chapter-9">
-        <h2>9. Приготовление раствора индиго.</h2>
+        <h3>Приготовление раствора индиго</h3>
         <div className={styles.masterclass__videoContainer}>
           <video controls key="video-9">
             <source
@@ -167,10 +167,10 @@ const marenGardenChapters = [
   },
   {
     id: 10,
-    title: '10. Кошениль.',
+    title: 'Кошениль',
     content: (
       <div>
-        <h2>10. Кошениль</h2>
+        <h3>Кошениль</h3>
         <div className={styles.masterclass__10__contentContainer}>
           <div className={styles.masterclass__10__textContent}>
             <p>В моей практике кошениль показала себя очень хорошо. Кармин, который находиться в жучках, стоек к свету,
@@ -208,10 +208,10 @@ const marenGardenChapters = [
   },
   {
     id: 11,
-    title: '11. Окрашивание ткани весенними листьями.',
+    title: 'Окрашивание ткани весенними листьями',
     content: (
       <div>
-        <h2>11. Окрашивание ткани весенними листьями.</h2>
+        <h3>Окрашивание ткани весенними листьями</h3>
         <div className={styles.masterclass__11__contentContainer}>
           <div className={styles.masterclass__11__textContent}>
             <p>Сезон окрашивания свежими листьями начинается с первых майских листьев. Свежие листья дают нежные
@@ -237,10 +237,10 @@ const marenGardenChapters = [
   },
   {
     id: 12,
-    title: '12. Обработка листьев танинами.',
+    title: 'Обработка листьев танинами',
     content: (
       <div key="chapter-12">
-        <h2>12. Обработка листьев танинами.</h2>
+        <h3>Обработка листьев танинами</h3>
         <div className={styles.masterclass__videoContainer}>
           <video controls key="video-12">
           <source
@@ -255,7 +255,7 @@ const marenGardenChapters = [
   },
   {
     id: 13,
-    title: '13. Конспекты.',
+    title: 'Конспекты',
     content: (
       <div>
         <Link

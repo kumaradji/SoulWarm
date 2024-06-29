@@ -19,7 +19,7 @@ const MarenGardenContent = ({ marenGardenChapters = [] }) => {
   return (
     <div className={styles.content}>
       <div className={styles.sidebar}>
-        <ul>
+        <ol>
           {marenGardenChapters.map((chapter) => (
             <li
               key={chapter.id}
@@ -29,7 +29,7 @@ const MarenGardenContent = ({ marenGardenChapters = [] }) => {
               {chapter.title}
             </li>
           ))}
-        </ul>
+        </ol>
       </div>
       <div className={styles.chapterContent}>
         {currentChapter.content}

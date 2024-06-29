@@ -1,16 +1,16 @@
 // VIPChatCard.module.scss
 .chatCard {
+	width: 570px;
 	display: flex;
 	flex-direction: column;
 	text-align: center;
 	color: var(--color-black);
-	border-radius: 10px;
-	background: var(--color-light-green);
+	border-radius: 5px;
+	background: var(--color-light-blue);
 	box-shadow: var(--box-shadow);
-	padding: 1rem;
+	padding: 0.7rem;
 	text-decoration: none;
 	cursor: pointer;
-	transition: transform 0.3s ease;
 
 	h3 {
 		font-size: 1.5rem;

@@ -1,4 +1,3 @@
-// MarenGarden.jsx
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -27,10 +26,12 @@ const MarenGarden = ({ marenGardenChapters = [] }) => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, amount: 0.8 }}
           >
-            <h3>{chapter.title}</h3>
-            <Link to={`/masterclass/${chapter.id}`} className={styles.link}>
-              Перейти к уроку
-            </Link>
+            <div className={styles.chapterContent}>
+              <div className={styles.chapterNumber}>{chapter.id}</div>
+              <Link to={`/masterclass/${chapter.id}`} className={styles.link}>
+                <h3>{chapter.title}</h3>
+              </Link>
+            </div>
           </motion.div>
         ))}
       </div>
