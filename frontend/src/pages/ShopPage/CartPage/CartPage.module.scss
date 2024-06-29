@@ -89,7 +89,7 @@
 					transition: background-color 0.3s;
 
 					&:hover {
-						background-color: var(--color-dark-red);
+						background-color: var(--color-blue);
 					}
 				}
 			}
@@ -103,9 +103,10 @@
 		align-items: flex-end;
 		gap: 10px;
 		border: 1px solid #eee;
+		box-shadow: var(--box-shadow);
 		padding: 20px;
-		border-radius: 10px;
-		background-color: #f9f9f9;
+		border-radius: 5px;
+		background-color: var(--color-light-main);
 
 		.checkoutButton, .buyInOneClickButton {
 			padding: 10px 20px;
@@ -131,11 +132,18 @@
 			align-items: flex-end;
 			width: 100%;
 			gap: 5px;
+		}
 
-			p {
-				margin: 0;
-				font-size: 1rem;
-			}
+		.totalPrice {
+			font-size: 2.2rem;
+			font-family: Iosevka, sans-serif;
+			margin-bottom: 10px;
+		}
+
+		.totalItems {
+			font-size: 1.8rem;
+			font-family: Iosevka, sans-serif;
+			margin-bottom: 10px;
 		}
 	}
 }

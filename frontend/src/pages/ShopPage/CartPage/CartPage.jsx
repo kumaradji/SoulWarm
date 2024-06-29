@@ -97,8 +97,8 @@ const CartPage = () => {
         </div>
         <div className={styles.cartSummary}>
           <div className={styles.summaryDetails}>
-            <p>Товаров на сумму: {calculateTotal()} руб.</p>
-            <p>Количество товаров: {cart.items.length} шт.</p>
+            <div className={styles.totalPrice}>Товаров на сумму: {calculateTotal()} руб.</div>
+            <div className={styles.totalItems}>Количество товаров: {cart.items.length} шт.</div>
           </div>
           <button className={styles.checkoutButton}>Перейти к оформлению</button>
           <button className={styles.buyInOneClickButton}>Купить в 1 клик</button>
