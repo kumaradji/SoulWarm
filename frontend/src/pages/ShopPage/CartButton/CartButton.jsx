@@ -1,12 +1,18 @@
-import React, { useState } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './CartButton.module.scss';
 import cartIcon from '../../../assets/icons/shopping-cart.png';
+import { CartContext } from '../../../context/CartContext';
 
-const CartButton = ({ cartCount, updateCartCount }) => {
+const CartButton = () => {
   const navigate = useNavigate();
+  const { cartCount, updateCartCount } = useContext(CartContext);
 
-  const handleCartClick = async () => {
+  useEffect(() => {
+    fetchCartCount();
+  }, []);
+
+  const fetchCartCount = async () => {
     try {
       const response = await fetch('http://localhost:8000/api/cart/', {
         headers: {
@@ -17,15 +23,18 @@ const CartButton = ({ cartCount, updateCartCount }) => {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       const data = await response.json();
-      if (data && Array.isArray(data.items)) {
-        updateCartCount(data.items.length);
+      if (Array.isArray(data) && data.length > 0 && Array.isArray(data[0].items)) {
+        updateCartCount(data[0].items.length);
       } else {
         console.error('Invalid cart data:', data);
       }
-      navigate('/cart');
     } catch (error) {
       console.error('Error fetching cart count:', error);
     }
+  };
+
+  const handleCartClick = () => {
+    navigate('/cart');
   };
 
   return (

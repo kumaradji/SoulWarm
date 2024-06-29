@@ -137,3 +137,8 @@ class Cart(models.Model):
         self.items.add(product)
         self.total_cost += product.price
         self.save()
+
+    def remove_item(self, product):
+        self.items.remove(product)
+        self.total_cost -= product.price
+        self.save()

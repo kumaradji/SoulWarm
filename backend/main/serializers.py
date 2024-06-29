@@ -10,7 +10,6 @@ class MessageSerializer(serializers.ModelSerializer):
         fields = ['id', 'user_name', 'content', 'timestamp', 'is_admin']
 
 
-
 class VIPMessageSerializer(serializers.ModelSerializer):
     user = serializers.StringRelatedField()
 

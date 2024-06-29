@@ -12,10 +12,14 @@ const ProductDetail = ({ updateCartCount }) => {
     const fetchProduct = async () => {
       try {
         const response = await fetch(`http://localhost:8000/api/products/${productId}/`);
+        if (!response.ok) {
+          throw new Error('Failed to fetch product');
+        }
         const data = await response.json();
         setProduct(data);
       } catch (error) {
         console.error('Error fetching product:', error);
+        setNotification('Failed to load product details');
       }
     };
 
@@ -23,50 +27,67 @@ const ProductDetail = ({ updateCartCount }) => {
   }, [productId]);
 
   const addToCart = async () => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      setNotification('Пожалуйста, войдите в систему');
+      setTimeout(() => setNotification(''), 3000);
+      return;
+    }
+
     try {
       const response = await fetch('http://localhost:8000/api/cart/create/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Token ${localStorage.getItem('token')}`
+          'Authorization': `Token ${token}`
         },
         body: JSON.stringify({ product_id: productId })
       });
 
-      if (response.ok) {
-        setNotification('Product added to cart');
-        setTimeout(() => setNotification(''), 3000); // Уведомление исчезает через 3 секунды
-        // Обновляем количество товаров в корзине
-        const cartResponse = await fetch('http://localhost:8000/api/cart/', {
-          headers: {
-            'Authorization': `Token ${localStorage.getItem('token')}`
-          }
-        });
-        const cartData = await cartResponse.json();
-        if (cartData && Array.isArray(cartData.items)) {
-          updateCartCount(cartData.items.length);
-        } else {
-          console.error('Invalid cart data:', cartData);
-        }
-      } else {
+      if (!response.ok) {
         const errorData = await response.json();
-        setNotification(`Failed to add product to cart: ${errorData.error}`);
-        setTimeout(() => setNotification(''), 3000); // Уведомление исчезает через 3 секунды
+        throw new Error(errorData.detail || 'Ошибка при добавлении товара в корзину');
       }
+
+      setNotification('Товар добавлен в корзину');
+      setTimeout(() => setNotification(''), 3000);
+
+      await updateCartData(token);
     } catch (error) {
       console.error('Error adding product to cart:', error);
-      setNotification('Failed to add product to cart');
-      setTimeout(() => setNotification(''), 3000); // Уведомление исчезает через 3 секунды
+      setNotification(error.message || 'Не удалось добавить товар в корзину');
+      setTimeout(() => setNotification(''), 3000);
     }
   };
 
-  if (!product) return <div>Loading...</div>;
+  const updateCartData = async (token) => {
+    try {
+      const cartResponse = await fetch('http://localhost:8000/api/cart/', {
+        headers: {
+          'Authorization': `Token ${token}`
+        }
+      });
+      if (!cartResponse.ok) {
+        throw new Error('Failed to fetch cart data');
+      }
+      const cartData = await cartResponse.json();
+      if (Array.isArray(cartData) && cartData.length > 0 && Array.isArray(cartData[0].items)) {
+        updateCartCount(cartData[0].items.length);
+      } else {
+        console.error('Invalid cart data:', cartData);
+      }
+    } catch (error) {
+      console.error('Error fetching cart data:', error);
+    }
+  };
 
   const renderContent = (content) => {
     return content.split('\n').map((paragraph, index) => (
       <p key={index}>{paragraph}</p>
     ));
   };
+
+  if (!product) return <div>Загрузка...</div>;
 
   return (
     <div className={styles.productDetail}>

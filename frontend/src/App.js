@@ -28,6 +28,7 @@ import './styles/styles.scss';
 import CartButton from "./pages/ShopPage/CartButton/CartButton";
 import CartPage from "./pages/ShopPage/CartPage/CartPage";
 import ConspectPage from "./pages/MarenGarden/MarenGardenContent/ConspectPage/ConspectPage";
+import {CartProvider} from "./context/CartContext";
 
 function App() {
   const {isLoggedIn, checkAuthStatus, user} = useAuth();
@@ -50,37 +51,39 @@ function App() {
 
   return (
     <Router>
-      <div className="app-container">
-        <div className="content">
-          <Header isLoggedIn={isLoggedIn} userName={userName} setUserName={setUserName}/>
-          <CartButton cartCount={cartCount} updateCartCount={updateCartCount}/>
-          <Routes>
-            <Route path="/" element={<LandingPage/>}/>
-            <Route path="/auth" element={<Authorization/>}/>
-            <Route path="/change-password" element={<ChangePassword/>}/>
-            <Route path="/profile" element={isLoggedIn ? <Profile/> : <Authorization redirectBack="/profile"/>}/>
-            <Route path="/lessons" element={<LessonsPage/>}/>
-            <Route path="/lesson/:lessonId" element={<LessonPage/>}/>
-            <Route path="/about" element={<AboutMePage/>}/>
-            <Route path="/promo" element={<PromoPage/>}/>
-            <Route path="/masterclass"
-                   element={<PrivateRoute element={<MarenGarden marenGardenChapters={marenGardenChapters}/>}
-                                          requiredGroup="VIP"/>}/>
-            <Route path="/masterclass/:chapterId"
-                   element={<PrivateRoute element={<MarenGardenContent marenGardenChapters={marenGardenChapters}/>}
-                                          requiredGroup="VIP"/>}/>
-            <Route path="/conspects" element={<PrivateRoute element={<ConspectPage />} requiredGroup="VIP" />} />
-            <Route path="/shop" element={<ShopPage/>}/>
-            <Route path="/cart" element={<CartPage/>}/>
-            <Route path="/product/:productId" element={<ProductDetail updateCartCount={updateCartCount}/>}/>
-            <Route path="/gallery/:galleryId" element={<GalleryPage/>}/>
-            <Route path="/gallery" element={<GalleryList galleries={galleries}/>}/>
-            <Route path="/privacy-policy" element={<PrivacyPolicy/>}/>
-          </Routes>
-          <ChatButton/>
+      <CartProvider>
+        <div className="app-container">
+          <div className="content">
+            <Header isLoggedIn={isLoggedIn} userName={userName} setUserName={setUserName}/>
+            <CartButton />
+            <Routes>
+              <Route path="/" element={<LandingPage/>}/>
+              <Route path="/auth" element={<Authorization/>}/>
+              <Route path="/change-password" element={<ChangePassword/>}/>
+              <Route path="/profile" element={isLoggedIn ? <Profile/> : <Authorization redirectBack="/profile"/>}/>
+              <Route path="/lessons" element={<LessonsPage/>}/>
+              <Route path="/lesson/:lessonId" element={<LessonPage/>}/>
+              <Route path="/about" element={<AboutMePage/>}/>
+              <Route path="/promo" element={<PromoPage/>}/>
+              <Route path="/masterclass"
+                     element={<PrivateRoute element={<MarenGarden marenGardenChapters={marenGardenChapters}/>}
+                                            requiredGroup="VIP"/>}/>
+              <Route path="/masterclass/:chapterId"
+                     element={<PrivateRoute element={<MarenGardenContent marenGardenChapters={marenGardenChapters}/>}
+                                            requiredGroup="VIP"/>}/>
+              <Route path="/conspects" element={<PrivateRoute element={<ConspectPage/>} requiredGroup="VIP"/>}/>
+              <Route path="/shop" element={<ShopPage/>}/>
+              <Route path="/cart" element={<CartPage/>}/>
+              <Route path="/product/:productId" element={<ProductDetail />}/>
+              <Route path="/gallery/:galleryId" element={<GalleryPage/>}/>
+              <Route path="/gallery" element={<GalleryList galleries={galleries}/>}/>
+              <Route path="/privacy-policy" element={<PrivacyPolicy/>}/>
+            </Routes>
+            <ChatButton/>
+          </div>
+          <Footer/>
         </div>
-        <Footer/>
-      </div>
+      </CartProvider>
     </Router>
   );
 }

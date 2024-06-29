@@ -431,6 +431,23 @@ class CartCreateView(APIView):
             return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 
+class CartRemoveView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def delete(self, request, item_id, *args, **kwargs):
+        try:
+            cart = Cart.objects.get(user=request.user)
+            product = EcoStaff.objects.get(id=item_id)
+            cart.remove_item(product)
+            return Response({"message": "Product removed from cart"}, status=status.HTTP_204_NO_CONTENT)
+        except Cart.DoesNotExist:
+            return Response({"error": "Cart not found"}, status=status.HTTP_404_NOT_FOUND)
+        except EcoStaff.DoesNotExist:
+            return Response({"error": "Product not found"}, status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+
 class CategoryListView(APIView):
     permission_classes = [AllowAny]
 
