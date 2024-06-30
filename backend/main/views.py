@@ -413,15 +413,19 @@ class CartCreateView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request, *args, **kwargs):
+        logger.info("Received request to add product to cart")
         cart, created = Cart.objects.get_or_create(user=request.user)
         product_id = request.data.get('product_id')
 
         if not product_id:
+            logger.error("Product ID is missing in the request")
             return Response({"error": "Product ID is required"}, status=status.HTTP_400_BAD_REQUEST)
 
         try:
             product = EcoStaff.objects.get(id=product_id)
+            logger.info(f"Product found: {product.title}")
             cart.add_item(product)
+            logger.info("Product added to cart successfully")
             return Response({"message": "Product added to cart"}, status=status.HTTP_201_CREATED)
         except EcoStaff.DoesNotExist:
             logger.error(f"Product with ID {product_id} not found")

@@ -1,10 +1,11 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { useAuth } from '../../../context/AuthContext';
 import Slider from "../../../components/Slider/Slider";
 import styles from './PromoPage.module.scss';
 
 const PromoPage = () => {
   const { user } = useAuth();
+  const [notification, setNotification] = useState('');
 
   const settings = {
     dots: false,
@@ -15,12 +16,44 @@ const PromoPage = () => {
   };
 
   const images = [
-    { src: 'https://a3fe9088-d3e3-469b-9c5e-a60352a1f77f.selstorage.ru/promo_01.jpg' },
-    { src: 'https://a3fe9088-d3e3-469b-9c5e-a60352a1f77f.selstorage.ru/promo_02.jpg' },
-    { src: 'https://a3fe9088-d3e3-469b-9c5e-a60352a1f77f.selstorage.ru/promo_03.jpg' },
-    { src: 'https://a3fe9088-d3e3-469b-9c5e-a60352a1f77f.selstorage.ru/promo_04.jpg' },
-    { src: 'https://a3fe9088-d3e3-469b-9c5e-a60352a1f77f.selstorage.ru/promo_05.jpg' }
+    { src: '/images/promoPage/promo_01.jpg', alt: 'Image 1' },
+    { src: '/images/promoPage/promo_02.jpg', alt: 'Image 2' },
+    { src: '/images/promoPage/promo_03.jpg', alt: 'Image 3' },
+    { src: '/images/promoPage/promo_04.jpg', alt: 'Image 4' },
+    { src: '/images/promoPage/promo_05.jpg', alt: 'Image 5' }
   ];
+
+  const addToCart = async () => {
+    const masterClassId = 43; // Уникальный идентификатор мастер-класса "Мареновый сад"
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+      alert('Пожалуйста, войдите в систему');
+      return;
+    }
+
+    try {
+      const response = await fetch('http://localhost:8000/api/cart/create/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Token ${token}`
+        },
+        body: JSON.stringify({ product_id: masterClassId })
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Ошибка при добавлении мастер-класса в корзину');
+      }
+
+      alert('Мастер-класс добавлен в корзину');
+    } catch (error) {
+      console.error('Error adding masterclass to cart:', error);
+      alert(error.message || 'Не удалось добавить мастер-класс в корзину');
+    }
+  };
+
 
   return (
     <div className={styles.promo}>
@@ -64,11 +97,9 @@ const PromoPage = () => {
       </ol>
       <p>А в качестве бонуса, вы получите видео мастер-класс и конспект по теме "Графика", что позволит вам расширить
         свои навыки и вдохновиться новыми идеями в области окрашивания ткани.</p>
-      {!user?.groups.includes('VIP') && (
-        <button className={styles.buyButton}>Купить</button>
-      )}
+      <button className={styles.buyButton} onClick={addToCart}>Купить</button>
       <div className={styles.gallery}>
-        <Slider {...settings} autoPlay={true} autoPlayTime={6000} width="80%" height="700px" images={images}/>
+        <Slider {...settings} autoPlay={true} autoPlayTime={6000} width="80%" height="700px" images={images} />
       </div>
     </div>
   );
