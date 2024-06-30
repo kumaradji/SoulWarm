@@ -18,6 +18,7 @@ const Authorization = ({ initialMode = 'login' }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
   const [loginAttempts, setLoginAttempts] = useState(0);
+  const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
   const navigate = useNavigate();
   const { isLoggedIn, login } = useAuth();
 
@@ -34,7 +35,11 @@ const Authorization = ({ initialMode = 'login' }) => {
         handleLogin(e, email, username, password, login, navigate, setError, setLoginAttempts);
         break;
       case 'register':
-        handleRegistration(e, password, confirmPassword, username, email, setError, setModalMessage, setIsModalOpen, setMode);
+        if (isCheckboxChecked) {
+          handleRegistration(e, password, confirmPassword, username, email, setError, setModalMessage, setIsModalOpen, setMode);
+        } else {
+          setError('Пожалуйста, дайте согласие на обработку персональных данных');
+        }
         break;
       default:
         console.error('Неизвестный режим:', mode);
@@ -48,57 +53,51 @@ const Authorization = ({ initialMode = 'login' }) => {
           <h2>{mode === 'login' ? 'Войти' : 'Зарегистрироваться'}</h2>
           {error && <div className={styles.error}>{error}</div>}
           <form onSubmit={handleSubmit}>
-            {(mode === 'login' || mode === 'register') && (
+            <div className={styles.formGroup}>
+              <input
+                type="text"
+                id="username"
+                placeholder="Имя пользователя или Email"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                required
+              />
+            </div>
+            {mode === 'register' && (
               <div className={styles.formGroup}>
-                <label htmlFor="username">Имя пользователя или Email:</label>
-                <input
-                  type="text"
-                  id="username"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  required
-                />
-              </div>
-            )}
-            {(mode === 'register') && (
-              <div className={styles.formGroup}>
-                <label htmlFor="email">Email:</label>
                 <input
                   type="email"
                   id="email"
+                  placeholder="Email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
                 />
               </div>
             )}
-            {(mode === 'login' || mode === 'register') && (
-              <div className={styles.formGroup}>
-                <label htmlFor="password">Пароль:</label>
-                <div className={styles.passwordWrapper}>
-                  <input
-                    type={showPassword ? 'text' : 'password'} // Переключение типа поля
-                    id="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                  />
-                  <span
-                    className={styles.passwordToggle}
-                    onClick={() => setShowPassword(!showPassword)}
-                  >
-                    {showPassword ? <FaEyeSlash /> : <FaEye />}
-                  </span>
-                </div>
+            <div className={styles.formGroup}>
+              <div className={styles.passwordWrapper}>
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  id="password"
+                  placeholder="Пароль"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+                <span
+                  className={styles.passwordToggle}
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? <FaEyeSlash /> : <FaEye />}
+                </span>
               </div>
-            )}
-            {mode === 'register' && (
-              <div className={styles.formGroup}>
-                <label htmlFor="confirmPassword">Подтвердите пароль:</label>
+              {mode === 'register' && (
                 <div className={styles.passwordWrapper}>
                   <input
-                    type={showPassword ? 'text' : 'password'} // Переключение типа поля
+                    type={showPassword ? 'text' : 'password'}
                     id="confirmPassword"
+                    placeholder="Подтвердите пароль"
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     required
@@ -110,42 +109,42 @@ const Authorization = ({ initialMode = 'login' }) => {
                     {showPassword ? <FaEyeSlash /> : <FaEye />}
                   </span>
                 </div>
+              )}
+            </div>
+            {mode === 'register' && (
+              <div className={styles.checkboxContainer}>
+                <input
+                  type="checkbox"
+                  id="agreement"
+                  checked={isCheckboxChecked}
+                  onChange={() => setIsCheckboxChecked(!isCheckboxChecked)}
+                  required
+                />
+                <label htmlFor="agreement">
+                  Я даю согласие на обработку персональных данных и соглашаюсь с
+                  <br/>
+                  <Link className={styles.privacyPolicyLink} to="/privacy-policy"> Политикой обработки персональных данных</Link>
+                </label>
               </div>
             )}
-            <button type="submit">
-              {mode === 'login' ? 'Войти' : 'Зарегистрироваться'}
-            </button>
-            {mode === 'login' ? (
-              <button type="button" onClick={() => setMode('register')}>Зарегистрироваться</button>
-            ) : (
-              <button type="button" onClick={() => setMode('login')}>Войти</button>
-            )}
+            <div className={styles.buttonContainer}>
+              <button type="submit" disabled={mode === 'register' && !isCheckboxChecked}>
+                {mode === 'login' ? 'Войти' : 'Зарегистрироваться'}
+              </button>
+              {mode === 'login' ? (
+                <button type="button" onClick={() => setMode('register')}>Зарегистрироваться</button>
+              ) : (
+                <button type="button" onClick={() => setMode('login')}>Войти</button>
+              )}
+            </div>
           </form>
         </div>
       </div>
-
-      <div className={styles.registrationImage}>
-        <img src={registrationImage} alt="Registration Image"/>
-        {mode === 'register' && (
-          <div className={styles.privacyPolicy}>
-            <p>
-              Нажимая на кнопку "Зарегистрироваться",
-              вы соглашаетесь с нашей
-            </p>
-            <p>
-              <Link className={styles.privacyPolicyLink} to="/privacy-policy"> Политикой
-                обработки персональных данных</Link>
-            </p>
-          </div>
-        )}
-      </div>
-
       {loginAttempts >= 5 && (
         <div className={styles.passwordOptions}>
           <button type="button" onClick={(e) => handleResetPassword(e, email, setError, setModalMessage, setIsModalOpen, setMode)}>Сбросить пароль</button>
         </div>
       )}
-
       <Modal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
@@ -153,6 +152,6 @@ const Authorization = ({ initialMode = 'login' }) => {
       />
     </div>
   );
-}
+};
 
 export default Authorization;
