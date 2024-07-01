@@ -1,7 +1,7 @@
 // UserBlock.module.scss
-@import '../../../styles/media';
-@import '../../../styles/variables';
-@import '../../../styles/mixins';
+@import '../../../styles/media.scss';
+@import '../../../styles/variables.scss';
+@import '../../../styles/mixins.scss';
 
 .userBlock {
 	display: flex;
@@ -30,7 +30,23 @@
 .userInfo__userName {
 	opacity: 0.7;
 	font-size: 18px;
-	margin-right: 8px; /* Добавляем отступ справа от имени пользователя */
+	margin-right: 8px;
+
+	@include desktop {
+		font-size: 15px;
+	}
+
+	@include tablet {
+		font-size: 14px;
+	}
+
+	@include mobile {
+		font-size: 16px;
+	}
+
+	@include mobile-small {
+		font-size: 14px;
+	}
 }
 
 .userInfo__logout {
@@ -49,12 +65,33 @@
 .logoutButton {
 	width: 75px;
 	height: 30px;
-	border-radius: 12px;
+	border-radius: 5px;
 	box-shadow: 0 0 10px 0 #00000033;
 	background-color: var(--color-blue);
 	font-family: 'Montserrat', sans-serif;
 	color: var(--color-main);
 	font-size: 15px;
+
+	@include desktop {
+		font-size: 14px;
+	}
+
+	@include tablet {
+		font-size: 13px;
+	}
+
+	@include mobile {
+		font-size: 13px;
+	}
+
+	@include mobile-small {
+		font-size: 13px;
+	}
+
+	@include mobile-above {
+		font-size: 12px;
+	}
+
 }
 
 .logoutButton:hover {

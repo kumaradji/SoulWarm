@@ -66,10 +66,12 @@ const UserBlock = ({ userName, isMobile }) => {
               />
             </div>
           </div>
-          <button className={styles.logoutButton} onClick={handleLogoutClick}>Выйти</button>
+          <button className={styles.logoutButton}
+                  onClick={handleLogoutClick}>Выйти</button>
         </>
       ) : (
-        <button className={styles.loginButton} onClick={handleLoginClick}>Войти</button>
+        <button className={styles.loginButton}
+                onClick={handleLoginClick}>Войти</button>
       )}
     </div>
   );

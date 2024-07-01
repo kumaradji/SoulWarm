@@ -7,25 +7,25 @@
 	position: fixed;
 	top: 120px;
 	right: 30px;
-	border-radius: 40%;
+	border-radius: 30%;
 	padding: 10px;
-	box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+	//box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
 	cursor: pointer;
 	z-index: 1000;
 
 	img {
-		width: 30px; // Размер иконки
-		height: 30px;
+		width: 50px; // Размер иконки
+		height: 50px;
 	}
 
 	.cartCount {
 		position: absolute;
-		top: -5px;
-		right: -5px;
+		top: 0;
+		right: 0;
 		background: var(--color-red);
 		color: #fff;
-		border-radius: 50%;
+		border-radius: 30%;
 		padding: 5px;
-		font-size: 12px;
+		font-size: 14px;
 	}
 }

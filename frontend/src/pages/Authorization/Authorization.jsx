@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import styles from './Authorization.module.scss';
-import registrationImage from '../../assets/LoginPic.png';
 import Modal from '../../components/Modal/Modal.jsx';
 import { handleLogin, handleRegistration, handleResetPassword } from './authFunctions';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';

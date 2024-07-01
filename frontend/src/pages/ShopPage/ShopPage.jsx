@@ -23,6 +23,7 @@ const ShopPage = () => {
         const response = await fetch('http://localhost:8000/api/categories/');
         const data = await response.json();
         setCategories(data);
+        console.log('Categories:', data); // Выводим категории для проверки
       } catch (error) {
         console.error('Ошибка при получении категорий:', error);
       }
@@ -41,16 +42,20 @@ const ShopPage = () => {
       <div className={styles.categoriesWrapper}>
         <div className={styles.categoriesContainer}>
           <ul>
-            {categories.map(category => (
-              <li key={category.id}>
-                <button
-                  className={selectedCategory === category.id ? styles.activeCategory : ''}
-                  onClick={() => setSelectedCategory(category.id)}
-                >
-                  {category.name}
-                </button>
-              </li>
-            ))}
+            {categories
+              .filter(category => {
+                return category.id !== 6;
+              })
+              .map(category => (
+                <li key={category.id}>
+                  <button
+                    className={selectedCategory === category.id ? styles.activeCategory : ''}
+                    onClick={() => setSelectedCategory(category.id)}
+                  >
+                    {category.name}
+                  </button>
+                </li>
+              ))}
             <br/>
             <li>
               <button

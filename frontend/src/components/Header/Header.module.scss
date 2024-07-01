@@ -1,71 +1,130 @@
 @import '../../styles/variables';
 @import '../../styles/mixins';
+@import '../../styles/media';
 
 header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1000;
-    width: 100%;
-    background: rgba(193, 108, 108, 0.3); /* Прозрачный фон для хедера */
-    backdrop-filter: blur(10px); /* Размытие заднего фона */
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 1000;
+	width: 100%;
+	background: rgba(193, 108, 108, 0.3);
+	backdrop-filter: blur(10px);
 
-    &::after {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 50px;
-        /* Красный градиент сверху вниз с 50% прозрачностью */
-        background: linear-gradient(to bottom, rgba(193, 108, 108, 0.5), rgba(193, 108, 108, 0));
-        pointer-events: none; /* Чтобы градиент не перекрывал элементы навигации */
-    }
-
+	&::after {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 50px;
+		background: linear-gradient(to bottom, rgba(193, 108, 108, 0.5), rgba(193, 108, 108, 0));
+		pointer-events: none;
+	}
 }
 
 .headerContent {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 93px;
-    max-width: 1440px;
-    margin: 0 auto;
-    padding: 0 60px;
-    font-size: 14px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	height: 93px;
+	max-width: 1440px;
+	margin: 0 auto;
+	padding: 0 60px;
+	font-size: 14px;
+
+	@include desktop {
+		padding: 0 20px;
+	}
+
+	@include tablet {
+		padding: 0 20px;
+	}
+
+	@include mobile {
+		 padding: 0 20px;
+	 }
 }
 
 .headerLogo {
-    width: 141px;
-    align-items: center;
-    margin-right: 0px;
+	width: 141px;
+	align-items: center;
+	margin-right: 0;
+
+	@include tablet {
+		width: 100px;
+		z-index: 2001;
+
+	}
 }
 
 .headerMenuIcon {
-    display: none;
-    cursor: pointer;
-    width: 30px;
-    height: 25px;
+	display: none;
+	cursor: pointer;
+	width: 30px;
+	height: 25px;
+	pointer-events: auto;
+	z-index: 2001;
+
+	@include mobile {
+		display: block;
+	}
+}
+
+
+.menuVisible .headerLogo {
+	// Измените стили логотипа для видимого меню, если нужно
 }
 
 .dropdownMenuPage {
-    position: fixed;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 370px;
-    max-width: 100%;
-    height: 100vh;
-    background-color: rgba(255, 0, 0, 0.35);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 120px;
-    z-index: 2000;
-    overflow-y: auto;
+	position: fixed;
+	top: 0;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 765px;
+	max-width: 100%;
+	height: 100vh;
+	background-color: var(--color-red);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding-top: 120px;
+	z-index: 2000;
+	overflow-y: auto;
+	pointer-events: none;
+
+	.navbar a {
+		margin-bottom: 10px; // Уменьшите расстояние между элементами меню
+	}
+
+	.footer__social {
+		display: flex;
+		justify-content: center;
+		gap: 20px;
+		margin-top: 90px;
+		margin-bottom: 90px;
+
+		a img {
+			width: 60px;
+			height: 60px;
+		}
+	}
 }
 
 .loginButton {
-    @include button-header;
+	@include button-header;
+}
+
+.rightSection {
+	display: flex;
+	align-items: center;
+
+	&.hideOnMobile {
+		display: none;
+
+		@include desktop {
+			display: flex;
+		}
+	}
 }

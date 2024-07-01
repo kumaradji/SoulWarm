@@ -1,23 +1,46 @@
-// Navbar.module.scss
+@import '../../../styles/media';
 
 .navbar {
-    display: flex;
-    flex: 0 0 650px;
-    font-family: Montserrat, sans-serif;
-    font-size: 16px;
-    text-transform: uppercase;
-    justify-content: space-between;
-    align-items: center;
+	display: flex;
+	flex: 0 0 650px;
+	font-family: Montserrat, sans-serif;
+	font-size: 16px;
+	text-transform: uppercase;
+	justify-content: space-between;
+	align-items: center;
+
+	@include desktop {
+		flex: 0 0 550px;
+		font-size: 12px;
+	}
+
+	@include tablet {
+		align-items: flex-start;
+		flex: 1;
+		font-size: 12px;
+	}
+
+	@include mobile {
+		flex-direction: column;
+		align-items: flex-start;
+		flex: 1;
+		font-size: 14px;
+	}
 }
 
-
 .navbar a {
-    color: var(--color-white);
-    text-decoration: none;
-    margin-right: 20px;
-    transition: opacity 0.3s ease;
+	color: var(--color-white);
+	text-decoration: none;
+	margin-right: 20px;
+	transition: opacity 0.3s ease;
+
+	@include mobile {
+		margin-right: 0;
+		margin-bottom: 10px; // Уменьшите расстояние между элементами меню
+		font-size: 20px;
+	}
 }
 
 .navbar a:hover {
-    opacity: 0.5;
+	opacity: 0.5;
 }
