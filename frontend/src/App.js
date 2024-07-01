@@ -29,6 +29,7 @@ import CartButton from "./pages/ShopPage/CartButton/CartButton";
 import CartPage from "./pages/ShopPage/CartPage/CartPage";
 import ConspectPage from "./pages/MarenGarden/MarenGardenContent/ConspectPage/ConspectPage";
 import {CartProvider} from "./context/CartContext";
+import OfferAgreement from "./pages/ShopPage/OfferAgreement/OfferAgreement";
 
 function App() {
   const {isLoggedIn, checkAuthStatus, user} = useAuth();
@@ -78,6 +79,7 @@ function App() {
               <Route path="/gallery/:galleryId" element={<GalleryPage/>}/>
               <Route path="/gallery" element={<GalleryList galleries={galleries}/>}/>
               <Route path="/privacy-policy" element={<PrivacyPolicy/>}/>
+              <Route path="/offer-agreement" element={<OfferAgreement/>}/>
             </Routes>
             <ChatButton/>
           </div>

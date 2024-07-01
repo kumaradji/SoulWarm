@@ -7,6 +7,7 @@ const CartPage = () => {
   const [cart, setCart] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isAgreementChecked, setIsAgreementChecked] = useState(false);
   const { updateCartCount } = useContext(CartContext);
 
   const fetchCart = async () => {
@@ -61,6 +62,9 @@ const CartPage = () => {
     }, 0).toFixed(2);
   };
 
+  const handleAgreementChange = (event) => {
+    setIsAgreementChecked(event.target.checked);
+  };
 
   if (loading) return <div>Загрузка...</div>;
   if (error) return <div>Ошибка: {error}</div>;
@@ -100,8 +104,31 @@ const CartPage = () => {
             <div className={styles.totalPrice}>Товаров на сумму: {calculateTotal()} руб.</div>
             <div className={styles.totalItems}>Количество товаров: {cart.items.length} шт.</div>
           </div>
-          <button className={styles.checkoutButton}>Перейти к оформлению</button>
-          <button className={styles.buyInOneClickButton}>Купить в 1 клик</button>
+          <button
+            className={styles.checkoutButton}
+            disabled={!isAgreementChecked}
+          >
+            Перейти к оформлению
+          </button>
+          <button
+            className={styles.buyInOneClickButton}
+            disabled={!isAgreementChecked}
+          >
+            Купить в 1 клик
+          </button>
+          <div className={styles.agreement}>
+            <label htmlFor="agreement">
+              <input
+                type="checkbox"
+                id="agreement"
+                checked={isAgreementChecked}
+                onChange={handleAgreementChange}
+              />
+              Продолжая оформление я соглашаюсь с
+              <br/>
+              <Link className={styles.privacyPolicyLink} to="/offer-agreement">договором оферты</Link>.
+            </label>
+          </div>
         </div>
       </div>
     </div>

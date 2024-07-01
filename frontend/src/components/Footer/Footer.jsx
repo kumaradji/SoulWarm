@@ -21,9 +21,6 @@ const Footer = () => {
             <div>Давайте волшебничать...</div>
             <div> У Вас всё получится!</div>
           </h3>
-          {/*<h4>*/}
-          {/*  +7 950 042 35 93 ------ koltsovaecoprint@yandex.ru*/}
-          {/*</h4>*/}
         </div>
         <div className={styles.footer__social}>
           <a href="https://t.me/nina_koltsova">

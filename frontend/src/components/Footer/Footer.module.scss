@@ -14,32 +14,38 @@ footer {
 }
 
 .footer__logo {
-	width: 150px;
+	width: 130px;
 }
 
 .footer__logo_title {
 	color: var(--color-main);
 	font-weight: 700;
 	font-family: LetteraTrentadue, sans-serif;
-	font-size: 65px;
+	font-size: 55px;
 }
 
 .footer__title {
 	color: var(--color-main);
 	font-weight: 700;
-	font-size: 18px;
+	font-size: 12px;
 	line-height: 60px;
 }
 
 
 .footer__social {
 	display: flex;
-	flex: 0 0 266px;
+	flex: 0 0 300px;
 	justify-content: space-between;
 	align-items: center;
+	margin-right: 10px;
+
+	img {
+		width: 50px;
+		height: auto;
+	}
 }
 
-.footer__social a {
-	margin: 0 10px;
-}
+//.footer__social a {
+//	margin: 0 10px;
+//}
 

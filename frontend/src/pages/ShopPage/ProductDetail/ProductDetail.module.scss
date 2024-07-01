@@ -11,17 +11,19 @@
 
 	.notification {
 		position: fixed;
-		top: 530px;
-		left: 20%;
+		top: 250px;
+		left: 30%;
 		transform: translateX(-50%);
-		//background-color: var(--color-blue);
-		color: var(--color-blue);
+		background-color: var(--color-red);
+		opacity: 70%;
+		color: var(--color-main);
 		padding: 10px 20px;
 		border-radius: 5px;
-		font-family: 'Montserrat', sans-serif;
-		font-size: 30px;
+		font-family: 'LetteraTrentadue', sans-serif;
+		font-size: 40px;
 		z-index: 1000;
-		//box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+		rotate: -20deg;
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 	}
 
 	.productImages {

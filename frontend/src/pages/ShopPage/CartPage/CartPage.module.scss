@@ -1,4 +1,3 @@
-// CartPage.module.scss
 @import '../../../styles/media';
 @import '../../../styles/variables';
 @import '../../../styles/mixins';
@@ -96,6 +95,14 @@
 		}
 	}
 
+	.privacyPolicyLink {
+		margin-top: 10px;
+		font-size: 1.2rem;
+		color: var(--color-red);
+		text-decoration: underline;
+		cursor: pointer;
+	}
+
 	.cartSummary {
 		flex: 1;
 		display: flex;
@@ -144,6 +151,30 @@
 			font-size: 1.8rem;
 			font-family: Iosevka, sans-serif;
 			margin-bottom: 10px;
+		}
+
+		.agreement {
+			margin-top: 10px;
+			font-size: 1rem;
+			label {
+				display: flex;
+				flex-direction: column;
+				align-items: flex-start;
+
+				input[type="checkbox"] {
+					margin-right: 10px;
+					margin-bottom: 5px;
+				}
+
+				a {
+					color: var(--color-link);
+					text-decoration: underline;
+
+					&:hover {
+						text-decoration: none;
+					}
+				}
+			}
 		}
 	}
 }
