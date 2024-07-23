@@ -1,0 +1,78 @@
+@import '../../styles/media';
+@import '../../styles/variables';
+
+.verticalGallery {
+	display: flex;
+	flex-direction: column;
+	overflow-y: auto;
+	max-height: 100vh;
+	gap: 10px;
+	padding: 10px;
+	scrollbar-width: thin;
+	scrollbar-color: var(--color-red) var(--color-main);
+
+	&::-webkit-scrollbar {
+		width: 8px;
+	}
+
+	&::-webkit-scrollbar-track {
+		background: var(--color-main);
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background-color: var(--color-red);
+		border-radius: 10px; /* Закругление ползунка */
+		border: 2px solid var(--color-main); /* Цвет границы ползунка */
+	}
+
+	.imageContainer {
+		cursor: pointer;
+		margin-bottom: 10px;
+	}
+
+	.image {
+		width: 100%;
+		object-fit: contain;
+	}
+
+	.fullscreen {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background: rgba(0, 0, 0, 0.8);
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		z-index: 1000;
+		cursor: pointer;
+
+		.fullscreenImage {
+			max-width: 90%;
+			max-height: 90%;
+			width: auto;
+			height: auto;
+		}
+
+		.prevButton, .nextButton {
+			position: absolute;
+			top: 50%;
+			transform: translateY(-50%);
+			background: none;
+			border: none;
+			color: var(--color-main);
+			font-size: 8rem;
+			cursor: pointer;
+			z-index: 1001;
+		}
+
+		.prevButton {
+			left: -50px;
+		}
+
+		.nextButton {
+			right: -50px;
+		}
+	}
+}

@@ -1,0 +1,68 @@
+// frontend/src/components/ChatButton/ChatButton.module.scss
+@import '../../styles/media';
+@import '../../styles/variables';
+@import '../../styles/mixins';
+
+.chatButton {
+	position: fixed;
+	bottom: 45px;
+	right: 30px;
+	background-color: var(--color-red);
+	color: white;
+	border-radius: 50%;
+	width: 60px;
+	height: 60px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 30px;
+	cursor: pointer;
+	animation: blink 1.5s infinite;
+
+	&:hover {
+		background-color: #218838;
+	}
+
+	@include tablet {
+		bottom: 30px;
+		right: 20px;
+	}
+
+	@include mobile {
+		bottom: 20px;
+		right: 20px;
+	}
+}
+
+@keyframes blink {
+	0%, 100% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 0.5;
+	}
+}
+
+.contactForm {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+
+	label {
+		display: flex;
+		flex-direction: column;
+		font-size: 16px;
+	}
+
+	input, textarea {
+		padding: 10px;
+		font-size: 16px;
+		border: 1px solid #ccc;
+		border-radius: 4px;
+	}
+
+	button {
+		@include button-style;
+		margin-top: 10px;
+	}
+}

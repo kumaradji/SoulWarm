@@ -1,0 +1,194 @@
+@import '../../styles/media';
+@import '../../styles/variables';
+
+.registrationForm {
+	width: 100%;
+	padding: 120px 0 30px 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.registrationContainer {
+	display: flex;
+	flex-direction: column;
+	max-width: 800px;
+	width: 100%;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	border-radius: 10px;
+	background-color: var(--color-light-main);
+	padding: 50px;
+
+	@include mobile {
+		padding: 20px;
+	}
+}
+
+.registrationFormWrapper {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+	h2 {
+		font-size: 30px;
+		margin-bottom: 20px;
+		color: var(--color-red);
+
+		@include mobile {
+			font-size: 24px;
+			margin-bottom: 15px;
+		}
+	}
+
+	form {
+		width: 100%;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 20px;
+
+		@include mobile {
+			flex-direction: column;
+			gap: 15px;
+		}
+
+		.formGroup {
+			flex: 1;
+			min-width: 45%;
+			display: flex;
+			flex-direction: column;
+
+			@include mobile {
+				min-width: 100%;
+			}
+
+			input {
+				padding: 10px;
+				border: 1px solid #ddd;
+				border-radius: 5px;
+				font-size: 16px;
+				color: #333;
+				outline: none;
+
+				&:focus {
+					border-color: #d97340;
+				}
+			}
+		}
+
+		.passwordWrapper {
+			position: relative;
+			width: 100%;
+			margin-bottom: 20px; /* Добавлено, чтобы увеличить расстояние между полями */
+
+			input {
+				width: 100%;
+			}
+
+			.passwordToggle {
+				position: absolute;
+				right: 10px;
+				top: 50%;
+				transform: translateY(-50%);
+				cursor: pointer;
+				color: #aaa;
+			}
+		}
+
+		.checkboxContainer {
+			display: flex;
+			align-items: center;
+			width: 100%;
+			margin-top: 10px;
+
+			input[type="checkbox"] {
+				margin-right: 10px;
+				height: 30px;
+				width: 30px;
+			}
+
+			label {
+				color: var(--color-black);
+				font-size: 16px;
+
+				@include mobile {
+					font-size: 12px;
+				}
+			}
+		}
+
+		.buttonContainer {
+			display: flex;
+			justify-content: space-between;
+			width: 100%;
+			margin-top: 20px;
+
+			@include mobile {
+				flex-direction: column;
+				align-items: center;
+				gap: 10px;
+			}
+
+			button {
+				flex: 1;
+				padding: 10px;
+				background-color: var(--color-red);
+				color: #fff;
+				border: none;
+				border-radius: 5px;
+				font-size: 16px;
+				cursor: pointer;
+				margin: 0 5px;
+
+				&:hover {
+					background-color: var(--color-blue);
+				}
+
+				&:disabled {
+					background-color: var(--color-light-grey);
+					cursor: not-allowed;
+				}
+
+				@include mobile {
+					width: 100%;
+					margin: 0;
+				}
+			}
+		}
+	}
+}
+
+.privacyPolicyLink {
+	text-align: center;
+	margin-top: 20px;
+	color: var(--color-blue);
+	font-size: 16px;
+	text-decoration: none;
+
+	&:hover {
+		text-decoration: underline;
+	}
+}
+
+.passwordOptions {
+	text-align: center;
+	margin-top: 20px;
+
+	button {
+		background: none;
+		border: none;
+		color: #d97340;
+		cursor: pointer;
+		font-size: 14px;
+
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+}
+
+.error {
+	color: #d9534f;
+	font-size: 14px;
+	margin-bottom: 20px;
+	text-align: center;
+}

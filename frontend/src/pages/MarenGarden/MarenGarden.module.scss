@@ -1,0 +1,179 @@
+@import '../../styles/media';
+@import '../../styles/variables';
+
+.masterclass {
+	max-width: 1440px;
+	padding: 110px 70px 30px 70px;
+	margin: 0 auto;
+	text-align: left;
+
+	h2 {
+		margin-bottom: 2rem;
+		text-align: center;
+
+		@include tablet {
+			margin-bottom: 1rem;
+		}
+
+		@include mobile {
+			margin-bottom: 1rem;
+		}
+
+		@include mobile-small {
+			margin-bottom: 1rem;
+		}
+
+	}
+
+	p {
+		margin-bottom: 1rem;
+		line-height: 1.5;
+
+		@include tablet {
+			margin-bottom: 0.5rem;
+		}
+
+		@include mobile {
+			margin-bottom: 0.5rem;
+		}
+
+		@include mobile-small {
+			margin-bottom: 0.5rem;
+		}
+
+	}
+
+	.chapters {
+		width: 100%;
+		padding: 1rem 2rem;
+		margin: 0 auto;
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		grid-gap: 1rem;
+		justify-content: center;
+		align-items: center;
+
+		@include tablet {
+			grid-template-columns: 1fr;
+		}
+
+		@include mobile {
+			grid-template-columns: 1fr;
+		}
+
+		@include mobile-small {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	.chapter {
+		width: 570px;
+		display: flex;
+		flex-direction: column;
+		text-align: left;
+		color: var(--color-black);
+		border-radius: 5px;
+		background: var(--color-light-green);
+		box-shadow: var(--box-shadow);
+		padding: 0.7rem;
+		text-decoration: none;
+		cursor: pointer;
+		position: relative;
+		margin: 0 auto;
+
+		@include desktop {
+			width: 450px;
+		}
+
+		@include tablet {
+			width: 650px;
+		}
+
+		@include mobile {
+			width: 400px;
+		}
+
+		@include mobile-small {
+			width: 300px;
+		}
+
+		.chapterNumber {
+			position: absolute;
+			left: -20px;
+			top: 50%;
+			transform: translateY(-50%);
+			-webkit-backdrop-filter: blur(10px);
+			backdrop-filter: blur(10px);
+			width: 55px;
+			height: 55px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			border-radius: 5px;
+			font-family: LetteraTrentadue, sans-serif;
+			font-size: 2rem;
+			color: var(--color-red);
+			box-shadow: var(--box-shadow);
+
+			@include tablet {
+				width: 50px;
+				height: 50px;
+				font-size: 1.8rem;
+			}
+
+			@include mobile {
+				width: 40px;
+				height: 40px;
+				font-size: 1.5rem;
+			}
+
+			@include mobile-small {
+				width: 30px;
+				height: 30px;
+				font-size: 1rem;
+			}
+		}
+	}
+
+	.chapterContent {
+		margin-left: 60px;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		text-align: left;
+
+		h3 {
+			font-size: 1.5rem;
+			margin-bottom: 1rem;
+
+			@include tablet {
+				font-size: 1.3rem;
+				margin-bottom: 0.7rem;
+			}
+
+			@include mobile {
+				font-size: 1.1rem;
+				margin-bottom: 0.7rem;
+			}
+
+			@include mobile-small {
+				font-size: 1rem;
+			}
+		}
+
+	}
+
+	&__videoContainer {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		padding: 20px 60px 30px 60px;
+		max-width: 1000px;
+		margin: 0 auto;
+
+		video {
+			width: 100%;
+			height: auto;
+		}
+	}
+}

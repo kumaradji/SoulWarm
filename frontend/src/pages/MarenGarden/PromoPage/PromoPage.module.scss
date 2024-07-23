@@ -1,0 +1,68 @@
+// PromoPage.module.scss
+@import '../../../styles/media';
+@import '../../../styles/variables';
+@import '../../../styles/mixins';
+
+.promo {
+	max-width: 1440px;
+	padding: 110px 70px 0 70px;
+	margin: 0 auto;
+	text-align: left;
+
+	h1 {
+		margin-bottom: 2rem;
+		text-align: center; /* Центрирование заголовка */
+	}
+
+	p {
+		margin-bottom: 1rem; /* Отступ между абзацами */
+		line-height: 1.3; /* Высота строки */
+	}
+
+	ul {
+		margin-bottom: 1rem; /* Отступ между списком и другими элементами */
+		padding-left: 20px; /* Отступ слева для списка */
+		line-height: 1.3; /* Высота строки */
+	}
+
+	li, ol {
+		margin-bottom: 0.5rem;
+		margin-left: 80px;
+		line-height: 1.3;
+	}
+
+	.buyButton {
+		@include button-style;
+	}
+
+	.gallery {
+		margin-top: 20px;
+		margin-bottom: 10px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+
+		.galleryImage {
+			width: 100%;
+			height: auto;
+			max-height: 700px; /* Ограничение максимальной высоты */
+		}
+	}
+}
+
+.notification {
+	position: fixed;
+	top: 200px;
+	left: 30%;
+	transform: translateX(-50%);
+	background-color: var(--color-red);
+	opacity: 70%;
+	color: var(--color-main);
+	padding: 10px 20px;
+	border-radius: 5px;
+	font-family: 'LetteraTrentadue', sans-serif;
+	font-size: 30px;
+	z-index: 1000;
+	rotate: -20deg;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}

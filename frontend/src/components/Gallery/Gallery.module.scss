@@ -1,0 +1,31 @@
+// Gallery.module.scss
+
+@import '../../styles/media';
+@import '../../styles/variables';
+
+.gallery {
+	margin: 20px auto;
+	max-width: 600px; /* Установите желаемую ширину галереи */
+
+	.gallery__image {
+		width: 100%;
+		height: auto;
+	}
+
+	.slick-prev, .slick-next {
+		width: 30px;
+		height: 30px;
+		z-index: 1;
+		display: none; /* Скрываем дефолтные стрелки */
+	}
+
+	.nextArrow {
+		display: block !important; /* Показываем кастомные стрелки */
+		right: -35px !important;
+	}
+
+	.prevArrow {
+		display: block !important; /* Показываем кастомные стрелки */
+		left: -35px !important;
+	}
+}

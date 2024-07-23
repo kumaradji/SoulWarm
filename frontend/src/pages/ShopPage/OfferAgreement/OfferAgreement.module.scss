@@ -1,0 +1,35 @@
+.offerAgreement {
+	max-width: 1000px;
+	margin: 0 auto;
+	padding: 100px 20px;
+	background-color: #fff;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+	h1, h2, h3, h4 {
+		font-family: Arial, sans-serif;
+		text-align: center;
+		color: var(--color-black);
+	}
+
+	p, ol {
+		font-family: Arial, sans-serif;
+		margin-bottom: 20px;
+		color: var(--color-text);
+	}
+
+	ol {
+		font-family: Arial, sans-serif;
+		list-style-type: disc;
+		padding-left: 20px;
+	}
+
+	a {
+		font-family: Arial, sans-serif;
+		color: var(--color-link);
+		text-decoration: underline;
+
+		&:hover {
+			text-decoration: none;
+		}
+	}
+}

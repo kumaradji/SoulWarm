@@ -1,0 +1,40 @@
+// VIPChatCard.module.scss
+
+@import '../../../../styles/media';
+@import '../../../../styles/variables';
+
+.chatCard {
+	position: fixed;
+	bottom: 160px;
+	right: 20px;
+	width: 160px;
+	display: flex;
+	text-align: center;
+	color: var(--color-white);
+	border-radius: 5px;
+	background: var(--color-light-blue);
+	box-shadow: var(--box-shadow);
+	padding: 0.7rem;
+	z-index: 2001;
+
+	text-decoration: none;
+	cursor: pointer;
+
+	h3 {
+		font-size: 1.2rem;
+		margin-bottom: 1rem;
+	}
+
+	p {
+		margin-bottom: 0.4rem;
+	}
+
+	.link {
+		color: var(--color-blue);
+		text-decoration: none;
+		font-family: Montserrat, sans-serif;
+		font-size: 1.2rem;
+		font-weight: 500;
+		margin-top: auto;
+	}
+}

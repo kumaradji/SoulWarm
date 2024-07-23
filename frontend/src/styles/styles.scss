@@ -1,0 +1,235 @@
+@import "~slick-carousel/slick/slick.css";
+@import "~slick-carousel/slick/slick-theme.css";
+
+@import 'reset.scss';
+@import 'media.scss';
+@import 'variables.scss';
+
+/* Project styles */
+/* Импорт локальных шрифтов */
+@font-face {
+	font-family: 'Montserrat';
+	src: url('../../public/fonts/Montserrat-Regular.ttf') format('truetype');
+	font-weight: 400;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Montserrat';
+	src: url('../../public/fonts/Montserrat-Bold.ttf') format('truetype');
+	font-weight: 700;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'LetteraTrentadue';
+	src: url('../../public/fonts/LetteraTrentadue.ttf') format('truetype');
+	font-weight: 400;
+	font-style: normal;
+}
+
+/* General styles */
+body, html {
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	font-family: 'Montserrat', sans-serif;
+	font-size: 14px;
+	background-color: var(--color-main);
+
+}
+
+a {
+	color: black;
+	text-decoration: none;
+}
+
+a:hover {
+	cursor: pointer;
+}
+
+h1, h2, h3, h4 {
+	font-family: 'LetteraTrentadue', sans-serif;
+}
+
+h1 {
+	font-size: 40px;
+
+	@include tablet {
+		font-size: 36px;
+	}
+
+	@include mobile {
+		font-size: 32px;
+	}
+
+	@include mobile-small {
+		font-size: 28px;
+	}
+}
+
+h2 {
+	font-size: 35px;
+
+	@include tablet {
+		font-size: 32px;
+	}
+
+	@include mobile {
+		font-size: 28px;
+	}
+
+	@include mobile-small {
+		font-size: 24px;
+	}
+}
+
+h3 {
+	font-size: 28px;
+
+	@include tablet {
+		font-size: 24px;
+	}
+
+	@include mobile {
+		font-size: 20px;
+	}
+
+	@include mobile-small {
+		font-size: 18px;
+	}
+}
+
+h4 {
+	font-family: 'Montserrat', sans-serif;
+	font-size: 18px;
+
+	@include tablet {
+		font-size: 16px;
+	}
+
+	@include mobile {
+		font-size: 14px;
+	}
+
+	@include mobile-small {
+		font-size: 12px;
+	}
+}
+
+p, ul, ol, span {
+	margin-bottom: 40px;
+	font-size: 24px;
+
+	@include desktop {
+		font-size: 22px;
+	}
+
+	@include tablet {
+		font-size: 20px;
+	}
+
+	@include mobile {
+		font-size: 18px;
+	}
+
+	@include mobile-small {
+		font-size: 14px;
+	}
+}
+
+/* Добавленные стили для body, html и корневого элемента */
+html, body, #root, .app-container {
+	height: 100%;
+	margin: 0;
+}
+
+.app {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+	max-width: 1440px;
+	margin: 0 auto;
+	width: 100%;
+	padding: 0 15px;
+	box-sizing: border-box;
+
+	@include desktop {
+		padding: 0 40px;
+	}
+
+	@include tablet {
+		padding: 0 30px;
+	}
+
+	@include mobile {
+		padding: 0 20px;
+	}
+
+	@include mobile-small {
+		padding: 0 10px;
+	}
+}
+
+.app-container {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+}
+
+.content {
+	flex-grow: 1;
+}
+
+.button {
+	width: 335px;
+	height: 59px;
+	border-radius: 5px;
+	font-family: 'Montserrat', sans-serif;
+	font-size: 22px;
+	color: var(--color-white);
+	background-color: var(--color-red);
+	border: none;
+	transition: background-color 0.3s ease;
+}
+
+.button.grey {
+	background-color: var(--color-grey);
+	color: var(--color-black);
+}
+
+.button:not(:disabled):hover {
+	cursor: pointer;
+	background-color: var(--color-green);
+	color: var(--color-black);
+}
+
+.button:disabled {
+	opacity: 0.5;
+}
+
+.conspect-button:hover {
+	background-color: var(--color-red);
+}
+
+
+input {
+	font-family: 'Montserrat', sans-serif;
+	font-size: 16px;
+
+	@include desktop {
+		font-size: 16px;
+	}
+
+	@include tablet {
+		font-size: 14px;
+	}
+
+	@include mobile {
+		font-size: 14px;
+	}
+
+	@include mobile-small {
+		font-size: 14px;
+	}
+}

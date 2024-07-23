@@ -1,0 +1,78 @@
+// LessonPage.module.scss
+@import '../../../styles/media';
+@import '../../../styles/variables';
+
+.lesson {
+	max-width: 1440px;
+	padding: 110px 70px 0 70px;
+	margin: 0 auto;
+	text-align: left;
+
+	@include tablet {
+		padding: 110px 20px 0 20px;
+	}
+
+	@include mobile {
+		padding: 110px 10px 0 10px;
+	}
+
+	@include mobile-small {
+		padding: 110px 5px 0 5px;
+	}
+
+
+	h1 {
+		margin-bottom: 2rem;
+		text-align: center;
+
+		@include tablet {
+			font-size: 28px;
+		}
+
+		@include mobile {
+			font-size: 24px;
+		}
+
+		@include mobile-small {
+			font-size: 20px;
+		}
+	}
+
+	&__content {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		padding: 20px 60px 30px 60px;
+		max-width: 1440px;
+		margin: 0 auto;
+
+		@include tablet {
+			padding: 20px 10px 30px 10px;
+		}
+
+		@include mobile {
+			padding: 10px 5px 10px 5px;
+		}
+
+		p {
+			text-align: left;
+			width: 100%;
+
+			@include tablet {
+				font-size: 18px;
+			}
+
+			@include mobile {
+				font-size: 16px;
+			}
+		}
+
+		video {
+			width: 100%;
+			max-width: 600px;
+			height: auto;
+			margin: 20px auto;
+			display: block;
+		}
+	}
+}

@@ -1,0 +1,42 @@
+// mixins.scss
+
+@mixin button-style {
+	display: block;
+	width: 200px;
+	padding: 10px 20px;
+	/* Центрирование кнопки */
+	margin: 20px auto;
+	font-size: 2rem;
+	font-family: LetteraTrentadue, sans-serif;
+	color: var(--color-main);
+	text-align: center;
+	background-color: var(--color-red);
+	border: none;
+	border-radius: 10px;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Добавляем тень */
+
+	&:hover {
+		background-color: var(--color-blue);
+	}
+}
+
+@mixin button-header {
+	width: 75px;
+	height: 30px;
+	border-radius: 5px;
+	box-shadow: 0 0 10px 0 #00000033;
+	margin: 20px auto 20px;
+	background-color: var(--color-blue);
+	font-family: 'Montserrat', sans-serif;
+	color: var(--color-main);
+	font-size: 15px;
+
+	&:hover {
+		cursor: pointer;
+		background-color: var(--color-red);
+		color: var(--color-main);
+	}
+}
+

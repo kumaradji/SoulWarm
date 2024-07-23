@@ -1,0 +1,45 @@
+@import '../../../styles/media';
+
+.navbar {
+	display: flex;
+	flex: 0 0 650px;
+	font-family: Montserrat, sans-serif;
+	font-size: 18px;
+	text-transform: uppercase;
+	justify-content: space-between;
+	align-items: center;
+
+	@include desktop {
+		flex: 0 0 550px;
+		font-size: 14px;
+	}
+
+	@include tablet {
+		flex: 0 0 480px;
+		font-size: 12px;
+	}
+
+	@include mobile {
+		flex-direction: column;
+		align-items: flex-start;
+		flex: 0 0 230px;
+		font-size: 14px;
+	}
+}
+
+.navbar a {
+	color: var(--color-black);
+	text-decoration: none;
+	margin-right: 20px;
+	transition: opacity 0.3s ease;
+
+	@include mobile {
+		margin-right: 0;
+		margin-bottom: 10px;
+		font-size: 14px;
+	}
+}
+
+.navbar a:hover {
+	opacity: 0.5;
+}

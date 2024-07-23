@@ -1,0 +1,52 @@
+version: '3.8'
+
+networks:
+  soul-warm:
+
+services:
+  db:
+    image: kumaradji/postgres_soul-warm
+    platform: linux/amd64
+    networks:
+      - soul-warm
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  django:
+    image: kumaradji/django_soul-warm
+    platform: linux/amd64
+    networks:
+      - soul-warm
+    command: gunicorn myproject.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - ./backend:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+
+  react:
+    image: kumaradji/react_soul-warm
+    platform: linux/amd64
+    networks:
+      - soul-warm
+    ports:
+      - "3000:80"
+
+  nginx:
+    image: kumaradji/nginx_soul-warm
+    platform: linux/amd64
+    networks:
+      - soul-warm
+    ports:
+      - "80:80"
+    depends_on:
+      - django
+      - react
+
+volumes:
+  pgdata:

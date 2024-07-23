@@ -1,0 +1,150 @@
+@import '../../styles/variables';
+@import '../../styles/mixins';
+@import '../../styles/media';
+
+header {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 1000;
+	width: 100%;
+	background: rgba(255, 255, 255, 0.3);
+	backdrop-filter: blur(10px);
+	box-shadow: 0 5px 8px rgba(0, 0, 0, 0.2);
+
+	&::after {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 50px;
+		//background: linear-gradient(to bottom, rgba(193, 108, 108, 0.5), rgba(193, 108, 108, 0));
+		pointer-events: none;
+	}
+}
+
+.headerContent {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	height: 93px;
+	max-width: 1440px;
+	margin: 0 auto;
+	padding: 0 60px;
+	font-size: 14px;
+
+	@include desktop {
+		padding: 0 20px;
+	}
+
+	@include tablet {
+		padding: 0 10px;
+	}
+
+	@include mobile {
+		padding: 0 10px;
+	}
+}
+
+.headerLogo {
+	width: 141px;
+	align-items: center;
+	margin-right: 0;
+
+	@include tablet {
+		width: 90px;
+		z-index: 2001;
+	}
+}
+
+.headerMenuIcon {
+	display: none;
+	cursor: pointer;
+	width: 30px;
+	height: 25px;
+	pointer-events: auto;
+	z-index: 2001;
+
+	@include mobile {
+		display: block;
+	}
+}
+
+.dropdownMenuPage {
+	position: fixed;
+	top: 0;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 765px;
+	max-width: 100%;
+	height: 100vh;
+	background-color: var(--color-red);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding-top: 120px;
+	z-index: 2000;
+	overflow-y: auto;
+	pointer-events: auto;
+
+	.navbar a {
+		margin-bottom: 10px;
+	}
+
+	.footer__social {
+		display: flex;
+		justify-content: center;
+		gap: 20px;
+		margin-top: 20px;
+		margin-bottom: 30px;
+
+		a img {
+			width: 60px;
+			height: 60px;
+		}
+
+		@include mobile-small {
+			a img {
+				width: 40px;
+				height: 40px;
+			}
+		}
+
+		@include mobile-above {
+			a img {
+				width: 40px;
+				height: 40px;
+			}
+		}
+	}
+}
+
+.userBlockWrapper {
+	margin-bottom: 20px;
+	display: flex;
+	justify-content: center;
+	width: 100%;
+
+	@include tablet {
+		margin-bottom: 50px;}
+}
+
+
+.loginButton {
+	@include button-header;
+}
+
+.rightSection {
+	display: flex;
+	align-items: center;
+
+	&.hideOnMobile {
+		display: none;
+
+		@include desktop {
+			display: flex;
+		}
+	}
+}

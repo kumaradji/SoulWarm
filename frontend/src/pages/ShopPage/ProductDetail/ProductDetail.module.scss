@@ -1,0 +1,110 @@
+@import '../../../styles/media';
+@import '../../../styles/variables';
+@import '../../../styles/mixins';
+
+.productDetail {
+	max-width: 1440px;
+	padding: 110px 70px 20px 70px;
+	margin: 0 auto;
+
+	@include tablet {
+		padding: 110px 40px 20px 40px;
+	}
+
+	@include mobile {
+		padding: 110px 20px 20px 20px;
+	}
+
+	@include mobile-small {
+		padding: 110px 10px 20px 10px;
+	}
+
+
+	.notification {
+		position: fixed;
+		top: 250px;
+		left: 30%;
+		transform: translateX(-50%);
+		background-color: var(--color-red);
+		opacity: 70%;
+		color: var(--color-main);
+		padding: 10px 20px;
+		border-radius: 5px;
+		font-family: 'LetteraTrentadue', sans-serif;
+		font-size: 40px;
+		z-index: 1000;
+		rotate: -20deg;
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	}
+
+	.productContent {
+		display: flex;
+
+		@include tablet {
+			flex-direction: column;
+		}
+	}
+
+	.productImages {
+		flex: 1;
+		max-width: 400px;
+		margin-right: 20px;
+
+		@include tablet {
+			max-width: 100%;
+			margin-right: 0;
+			order: 2;
+			margin-top: 20px;
+		}
+	}
+
+	.productInfo {
+		flex: 2;
+
+		@include tablet {
+			order: 1;
+		}
+
+		h1 {
+			margin-bottom: 20px;
+		}
+
+		.productText {
+			font-size: 1rem;
+			margin-bottom: 20px;
+		}
+
+		.productPrice {
+			font-family: Iosevka, sans-serif;
+			font-size: 2.1rem;
+			color: var(--color-blue);
+			margin-bottom: 20px;
+
+			@include mobile {
+				text-align: center;
+			}
+
+			@include mobile {
+			}
+		}
+
+		.addToCartButton {
+			@include button-style;
+			margin: 0;
+			font-size: 1.5rem;
+			width: 270px;
+
+			&:hover {
+				background-color: var(--color-blue);
+			}
+
+			@include mobile {
+				width: 100%;
+			}
+
+			@include mobile-small {
+				width: 100%;
+			}
+		}
+	}
+}

@@ -1,0 +1,28 @@
+// variables.scss
+:root {
+	--color-main: #fbf8f5;
+	--color-light-main: #FCF5ED;
+	--color-red: #c16c6c;
+	--color-green: #029491;
+	--color-footer: #6B8A7A;
+	--color-grey: #949494;
+	--color-dark-grey: #6c757d;
+	--color-black: #000000;
+	--color-white: #FFFFFF;
+	--color-light-blue: #c7c8d3;
+	--color-light-grey: #D2D2D2;
+	--color-light: #f1f5f8;
+	--color-blue: #7776B3;
+	--color-dark-blue: #074173;
+	--color-light-green: #68D2E8;
+	--color-dark-green: #5cb85c;
+
+	--box-shadow: 0 1px 5px rgba(0, 0, 0, 0.12), 0 1px 5px rgba(0, 0, 0, 0.24);
+
+	--gradient: linear-gradient(to right, #AB5BFB, #7690EA);
+}
+
+//
+//@import '../../../styles/media';
+//@import '../../../styles/variables';
+//@import '../../../styles/mixins';
