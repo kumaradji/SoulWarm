@@ -140,6 +140,10 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'soulwarm.wsgi.application'
 
+# Путь, где будут собираться все статические файлы при выполнении collectstatic
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
@@ -172,9 +176,5 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
-# Путь, где будут собираться все статические файлы при выполнении collectstatic
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
