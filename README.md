@@ -10,10 +10,11 @@
 ### Установка зависимостей для Django
 
 3. Создать виртуальное окружение и активировать его:
-
+```sh
 python -m venv venv
 source venv/bin/activate  
-# Для Windows используйте `venv\Scripts\activate`
+```
+Для Windows используйте `venv\Scripts\activate`
 
 
 4. Установить зависимости:
