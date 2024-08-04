@@ -20,7 +20,7 @@ const ModalChat = ({ onClose }) => {
       setIsAuthenticated(true);
       const fetchMessages = async () => {
         try {
-          const response = await fetch('http://localhost:8000/api/messages/', {
+          const response = await fetch('/api/messages/', {
             headers: {
               'Authorization': `Token ${token}`
             }
@@ -54,7 +54,7 @@ const ModalChat = ({ onClose }) => {
       const controller = new AbortController();
       try {
         console.log('Polling for new messages...');
-        const response = await fetch(`http://localhost:8000/api/long-polling/messages/?last_message_id=${lastMessageId.current}`, {
+        const response = await fetch(`/api/long-polling/messages/?last_message_id=${lastMessageId.current}`, {
           signal: controller.signal
         });
         if (response.ok) {
@@ -94,7 +94,7 @@ const ModalChat = ({ onClose }) => {
       setShowModal(true);
       return;
     }
-    const response = await fetch('http://localhost:8000/api/messages/create/', {
+    const response = await fetch('/api/messages/create/', {
       method: 'POST',
       headers: {
         'Authorization': `Token ${token}`,

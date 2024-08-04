@@ -11,7 +11,7 @@ const ShopPage = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch('http://localhost:8000/api/products/');
+        const response = await fetch('/api/products/');
         const data = await response.json();
         setProducts(data);
       } catch (error) {
@@ -21,7 +21,7 @@ const ShopPage = () => {
 
     const fetchCategories = async () => {
       try {
-        const response = await fetch('http://localhost:8000/api/categories/');
+        const response = await fetch('/api/categories/');
         const data = await response.json();
         setCategories(data);
         console.log('Categories:', data); // Выводим категории для проверки
@@ -80,7 +80,7 @@ const ShopPage = () => {
                 <Link to={`/product/${product.id}`}>
                   <div className={styles.productImage}>
                     {product.images && product.images.length > 0 ? (
-                      <img src={`http://localhost:8000${product.images[0]}`} alt={product.title} onError={(e) => {
+                      <img src={`http://localhost${product.images[0]}`} alt={product.title} onError={(e) => {
                         e.target.onerror = null;
                         e.target.src = 'https://via.placeholder.com/100';
                       }} />

@@ -18,7 +18,7 @@ export const CartProvider = ({ children }) => {
     }
 
     try {
-      const response = await fetch('http://localhost:8000/api/cart/create/', {
+      const response = await fetch('/api/cart/create/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -33,7 +33,7 @@ export const CartProvider = ({ children }) => {
       }
 
       // Обновляем состояние корзины
-      const cartResponse = await fetch('http://localhost:8000/api/cart/', {
+      const cartResponse = await fetch('/api/cart/', {
         headers: {
           'Authorization': `Token ${token}`
         }

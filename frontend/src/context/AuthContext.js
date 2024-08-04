@@ -30,7 +30,7 @@ export const AuthProvider = ({ children }) => {
     if (!token) return;
 
     try {
-      const response = await fetch('http://localhost:8000/api/user/', {
+      const response = await fetch('/api/user/', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

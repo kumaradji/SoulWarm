@@ -1,17 +1,27 @@
-FROM --platform=linux/amd64 node:18-alpine as build
+### Node.js ###
+FROM node:18-alpine as builder
 
-# Устанавливаем зависимости
-WORKDIR /app
-COPY ../../frontend/package.json /app/
-COPY ../../frontend/package-lock.json /app/
+# Установка рабочей директории
+WORKDIR /app/frontend
+
+# Копируем package для установки зависимостей
+COPY ./frontend/package.json .
+
 RUN npm install
 
-# Копируем проект и собираем его
-COPY ../../frontend /app/
+# Копируем весь проект
+COPY ./frontend .
+
+# Собираем билд
 RUN npm run build
 
-# Запускаем Nginx для сервировки React приложения
-FROM nginx:alpine
-COPY --from=build /app/build /usr/share/nginx/html
-COPY ../../frontend/default.conf /etc/nginx/conf.d/default.conf
-CMD ["nginx", "-g", "daemon off;"]
+FROM node:18-alpine
+
+# Установка рабочей директории
+WORKDIR /app/frontend
+
+# Запуск сервера React
+RUN npm install -g serve
+
+# Копируем из билда статическую сборку
+COPY --from=builder /app/frontend/build ./build

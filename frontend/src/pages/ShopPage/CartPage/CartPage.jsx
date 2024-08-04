@@ -12,7 +12,7 @@ const CartPage = () => {
 
   const fetchCart = async () => {
     try {
-      const response = await fetch('http://localhost:8000/api/cart/', {
+      const response = await fetch('/api/cart/', {
         headers: {
           'Authorization': `Token ${localStorage.getItem('token')}`
         }
@@ -37,7 +37,7 @@ const CartPage = () => {
 
   const removeFromCart = async (itemId) => {
     try {
-      const response = await fetch(`http://localhost:8000/api/cart/remove/${itemId}/`, {
+      const response = await fetch(`/api/cart/remove/${itemId}/`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Token ${localStorage.getItem('token')}`

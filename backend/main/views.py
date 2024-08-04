@@ -195,7 +195,6 @@ class UserRegistrationView(APIView):
         print('Ошибки сериализатора:', serializer.errors)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
 class UserProfileView(APIView):
     permission_classes = [IsAuthenticated]
 

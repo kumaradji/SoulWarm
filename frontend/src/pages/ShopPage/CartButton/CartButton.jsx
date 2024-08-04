@@ -17,7 +17,7 @@ const CartButton = () => {
 
   const fetchCartCount = async () => {
     try {
-      const response = await fetch('http://localhost:8000/api/cart/', {
+      const response = await fetch('/api/cart/', {
         headers: {
           'Authorization': `Token ${token}`
         }
