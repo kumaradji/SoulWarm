@@ -19,7 +19,7 @@ const Profile = () => {
 
         if (user) {
           try {
-            const avatarResponse = await fetch('http://localhost:8000/api/profile/avatar/', {
+            const avatarResponse = await fetch('/api/profile/avatar/', {
               headers: {
                 'Authorization': `Token ${localStorage.getItem('token')}`
               }
@@ -27,7 +27,7 @@ const Profile = () => {
 
             if (avatarResponse.ok) {
               const data = await avatarResponse.json();
-              setAvatarUrl(`http://localhost:8000${data.avatar}`);
+              setAvatarUrl(`http://localhost${data.avatar}`);
             } else {
               console.error('Error fetching avatar:', avatarResponse.statusText);
             }
@@ -78,7 +78,7 @@ const Profile = () => {
       formData.append('avatar', avatar);
 
       try {
-        const response = await fetch('http://localhost:8000/api/profile/avatar/', {
+        const response = await fetch('/api/profile/avatar/', {
           method: 'PUT',
           headers: {
             'Authorization': `Token ${localStorage.getItem('token')}`

@@ -11,7 +11,7 @@ const UserBlock = ({ userName, setMode }) => {
 
   useEffect(() => {
     if (isLoggedIn && user) {
-      fetch(`http://localhost:8000/api/profile/avatar/`, {
+      fetch(`/api/profile/avatar/`, {
         headers: {
           'Authorization': `Token ${localStorage.getItem('token')}`
         }
@@ -24,7 +24,7 @@ const UserBlock = ({ userName, setMode }) => {
         })
         .then(data => {
           if (data.avatar) {
-            setAvatarUrl(`http://localhost:8000${data.avatar}`);
+            setAvatarUrl(`http://localhost${data.avatar}`);
           }
         })
         .catch(error => {

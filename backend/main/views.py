@@ -172,20 +172,11 @@ class UserRegistrationView(APIView):
         serializer = UserRegistrationSerializer(data=request.data, context={'request': request})
         if serializer.is_valid():
             user = serializer.save()
-            activation = Activation.objects.create(user=user)
-            activation_url = request.build_absolute_uri(reverse('activate_user', args=[activation.token]))
-            try:
-                # Отправка письма пользователю для подтверждения регистрации
-                send_mail(
-                    'Подтверждение регистрации',
-                    f'Для подтверждения регистрации перейдите по ссылке: {activation_url}',
-                    'koltsovaecoprint@yandex.ru',
-                    [user.email],
-                    fail_silently=False,
-                )
-                print('Письмо отправлено на:', user.email)
+            user.is_active = True  # Сразу активируем пользователя
+            user.save()
 
-                # Отправка письма администратору о регистрации нового пользователя
+            # Отправка письма администратору о регистрации нового пользователя
+            try:
                 send_mail(
                     'Новый пользователь зарегистрирован',
                     f'Пользователь {user.username} зарегистрировался с email {user.email}.',
@@ -195,15 +186,14 @@ class UserRegistrationView(APIView):
                 )
                 print('Письмо администратору отправлено о пользователе:', user.username)
             except Exception as e:
-                print('Ошибка при отправке письма:', e)
+                print('Ошибка при отправке письма администратору:', e)
 
             return Response(
-                {"message": "Пользователь успешно зарегистрирован. Проверьте ваш email для подтверждения регистрации."},
+                {"message": "Пользователь успешно зарегистрирован."},
                 status=status.HTTP_201_CREATED
             )
         print('Ошибки сериализатора:', serializer.errors)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
 
 class UserProfileView(APIView):
     permission_classes = [IsAuthenticated]

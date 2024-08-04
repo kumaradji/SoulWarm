@@ -13,7 +13,7 @@ const ProductDetail = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await fetch(`http://localhost:8000/api/products/${productId}/`);
+        const response = await fetch(`/api/products/${productId}/`);
         if (!response.ok) {
           throw new Error('Failed to fetch product');
         }
@@ -48,7 +48,7 @@ const ProductDetail = () => {
       <div className={styles.productContent}>
         <div className={styles.productImages}>
           {product.images && product.images.length > 0 && (
-            <VerticalGallery images={product.images.map(image => `http://localhost:8000${image}`)} />
+            <VerticalGallery images={product.images.map(image => `http://localhost${image}`)} />
           )}
         </div>
 
