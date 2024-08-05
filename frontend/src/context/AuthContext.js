@@ -73,7 +73,7 @@ export const AuthProvider = ({ children }) => {
       const token = localStorage.getItem('token');
       if (token) {
         try {
-          const response = await fetch('http://localhost:8000/api/verify-token/', {
+          const response = await fetch('/api/verify-token/', {
             method: 'GET',
             headers: {
               'Authorization': `Token ${token}`,
