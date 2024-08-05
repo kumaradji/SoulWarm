@@ -19,11 +19,11 @@ class Profile(models.Model):
     def save(self, *args, **kwargs):
         # Сохраним ссылку на старый аватар
         try:
-            old_avatar = Profile.objects.get(pk=self.pk).avatar.path
+            this = Profile.objects.get(id=self.id)
+            if this.avatar != self.avatar:
+                this.avatar.delete(save=False)
         except Profile.DoesNotExist:
-            old_avatar = None
-        except ValueError:
-            old_avatar = None
+            pass
 
         super().save(*args, **kwargs)
 
@@ -31,20 +31,27 @@ class Profile(models.Model):
         if self.avatar and hasattr(self.avatar, 'path'):
             try:
                 img = Image.open(self.avatar.path)
-                if img.height > 100 or img.width > 100:
-                    output_size = (100, 100)
+                if img.height > 300 or img.width > 300:
+                    output_size = (300, 300)
                     img.thumbnail(output_size)
                     img.save(self.avatar.path)
             except Exception as e:
                 print(f"Ошибка обработки аватара: {e}")
 
-        # Удаление старого аватара, если он есть и не совпадает с текущим
-        if old_avatar and old_avatar != self.avatar.path:
-            if os.path.isfile(old_avatar):
-                os.remove(old_avatar)
+    def delete(self, *args, **kwargs):
+        # Удаляем файл аватара при удалении объекта
+        if self.avatar:
+            if os.path.isfile(self.avatar.path):
+                os.remove(self.avatar.path)
+        super(Profile, self).delete(*args, **kwargs)
 
     def __str__(self):
-        return self.user.username
+        return f'{self.user.username} Profile'
+
+    def get_avatar_url(self):
+        if self.avatar and hasattr(self.avatar, 'url'):
+            return self.avatar.url
+        return None
 
 
 class Activation(models.Model):

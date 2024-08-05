@@ -9,8 +9,8 @@ from django.views import View
 from rest_framework.views import APIView
 from rest_framework import generics, status, viewsets
 from rest_framework.response import Response
-from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.decorators import api_view, permission_classes
 from django.core.mail import send_mail
 from django.contrib.auth import authenticate, update_session_auth_hash
 from django.contrib.auth.models import User, Group
@@ -517,3 +517,9 @@ class EcoStaffCreateView(generics.CreateAPIView):
             image_serializer.save()
 
         return Response(ecostaff_serializer.data, status=status.HTTP_201_CREATED)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def verify_token(request):
+    return Response({'valid': True})

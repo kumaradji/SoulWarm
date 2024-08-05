@@ -7,7 +7,7 @@ from .views import (
     UserProfileView, ActivateUser, landing_page, category_list, category_detail, product_list, product_detail,
     UserDetailView, AvatarUpdateView, MessageListView, MessageCreateView,
     CartListView, CartCreateView, TelegramWebhookView, VIPMessageListView, VIPMessageCreateView, LongPollingMessageView,
-    CartRemoveView
+    CartRemoveView, verify_token
 )
 
 urlpatterns = [
@@ -37,4 +37,5 @@ urlpatterns = [
     path('cart/', CartListView.as_view(), name='cart-list'),
     path('cart/create/', CartCreateView.as_view(), name='cart-create'),
     path('cart/remove/<int:item_id>/', CartRemoveView.as_view(), name='cart-remove'),
+    path('verify-token/', verify_token, name='verify_token'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
