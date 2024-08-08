@@ -1,5 +1,4 @@
 # Node.js
-/node_modules
 /.pnp
 .pnp.js
 npm-debug.log*
@@ -35,6 +34,7 @@ venv.bak/
 
 # Ignore built ts files
 frontend/build
+frontend/node_modules/
 
 # React Stuff
 .eslintcache
@@ -50,7 +50,3 @@ frontend/public/*
 backend/.env
 .pytest_cache/
 *.pytest_cache/
-
-# Explicitly ignore videos and images in public folder
-frontend/public/videos/
-frontend/public/images/
