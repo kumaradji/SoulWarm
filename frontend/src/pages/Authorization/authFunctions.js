@@ -25,26 +25,6 @@ export const handleLogin = async (e, email, username, password, login, navigate,
   }
 };
 
-// Функция отвечает за получение CSRF-токена из куки
-function getCookie(name) {
-  let cookieValue = null;
-  if (document.cookie && document.cookie !== '') {
-    const cookies = document.cookie.split(';');
-    for (let i = 0; i < cookies.length; i++) {
-      const cookie = cookies[i].trim();
-      // Проверяем, начинается ли эта строка с нужного имени
-      if (cookie.substring(0, name.length + 1) === (name + '=')) {
-        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-        break;
-      }
-    }
-  }
-  return cookieValue;
-}
-
-// Получаем CSRF-токен
-const csrftoken = getCookie('csrftoken');
-
 export const handleRegistration = async (e, password, confirmPassword, username, email, setError, setModalMessage, setIsModalOpen, setMode) => {
   e.preventDefault();
 
@@ -60,7 +40,6 @@ export const handleRegistration = async (e, password, confirmPassword, username,
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'X-CSRFToken': csrftoken, // передаем CSRF-токен при регистрации на бэкенд
       },
       body: JSON.stringify({ username, email, password }),
     });

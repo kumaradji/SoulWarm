@@ -175,6 +175,9 @@ class UserRegistrationView(APIView):
             user.is_active = True  # Сразу активируем пользователя
             user.save()
 
+            # Создаем токен для пользователя
+            token, created = Token.objects.get_or_create(user=user)
+
             # Отправка письма администратору о регистрации нового пользователя
             try:
                 send_mail(

@@ -33,6 +33,7 @@ WORKDIR /app/backend
 
 # Копируем весь проект в образ
 COPY ./backend .
+COPY ./backend/.env.prod.example .env
 
 #Копируем entrypoint в образ для запуска
 COPY ./docker/Django/entrypoint.sh /app/backend/entrypoint.sh
