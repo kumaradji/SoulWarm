@@ -42,12 +42,11 @@ const ScrollToTop = () => {
 };
 
 function App() {
-  const { isLoggedIn, checkAuthStatus, user } = useAuth();
-  const [userName, setUserName] = useState('');
+  const { isLoggedIn, fetchUserData, user } = useAuth();
 
   useEffect(() => {
-    checkAuthStatus();
-  }, []);
+    fetchUserData();
+  }, [fetchUserData]);
 
   useEffect(() => {
     if (!isLoggedIn) {
@@ -55,13 +54,14 @@ function App() {
     }
   }, [isLoggedIn]);
 
+
   return (
     <Router>
       <ScrollToTop />
       <CartProvider>
         <div className="app-container">
           <div className="content">
-            <Header isLoggedIn={isLoggedIn} userName={userName} setUserName={setUserName} />
+            <Header isLoggedIn={isLoggedIn} userName={user?.username} />
             <CartButton />
             <Routes>
               <Route path="/" element={<LandingPage />} />

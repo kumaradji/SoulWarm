@@ -1,14 +1,18 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import styles from './ProductDetail.module.scss';
 import VerticalGallery from '../../../components/VerticalGallery/VerticalGallery';
 import { CartContext } from '../../../context/CartContext';
+import { AuthContext } from "../../../context/AuthContext";
 
 const ProductDetail = () => {
   const { productId } = useParams();
   const [product, setProduct] = useState(null);
   const [notification, setNotification] = useState('');
   const { addToCart } = useContext(CartContext);
+  const { isLoggedIn } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -29,9 +33,14 @@ const ProductDetail = () => {
   }, [productId]);
 
   const handleAddToCart = () => {
-    addToCart(product);
-    setNotification('Товар добавлен в корзину');
-    setTimeout(() => setNotification(''), 3000);
+    if (isLoggedIn) {
+      addToCart(product);
+      setNotification('Товар добавлен в корзину');
+      setTimeout(() => setNotification(''), 3000);
+    } else {
+      // Перенаправление на страницу входа
+      navigate('/profile', { state: { from: location.pathname } });
+    }
   };
 
   const renderContent = (content) => {
@@ -48,7 +57,7 @@ const ProductDetail = () => {
       <div className={styles.productContent}>
         <div className={styles.productImages}>
           {product.images && product.images.length > 0 && (
-            <VerticalGallery images={product.images.map(image => `http://localhost${image}`)} />
+            <VerticalGallery images={product.images} />
           )}
         </div>
 
@@ -58,7 +67,9 @@ const ProductDetail = () => {
             {renderContent(product.content)}
             <p className={styles.productPrice}>Цена: {product.price} руб.</p>
           </div>
-          <button className={styles.addToCartButton} onClick={handleAddToCart}>Добавить в корзину</button>
+          <button className={styles.addToCartButton} onClick={handleAddToCart}>
+            {isLoggedIn ? 'Добавить в корзину' : 'Войти для покупки'}
+          </button>
         </div>
       </div>
     </div>

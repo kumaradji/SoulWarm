@@ -80,12 +80,12 @@ const ShopPage = () => {
                 <Link to={`/product/${product.id}`}>
                   <div className={styles.productImage}>
                     {product.images && product.images.length > 0 ? (
-                      <img src={`http://localhost${product.images[0]}`} alt={product.title} onError={(e) => {
+                      <img src={product.images[0]} alt={product.title} onError={(e) => {
                         e.target.onerror = null;
                         e.target.src = 'https://via.placeholder.com/100';
-                      }} />
+                      }}/>
                     ) : (
-                      <img src='https://via.placeholder.com/100' alt={product.title} />
+                      <img src='https://via.placeholder.com/100' alt={product.title}/>
                     )}
                   </div>
                   <h3 className={styles.productTitle}>{product.title}</h3>

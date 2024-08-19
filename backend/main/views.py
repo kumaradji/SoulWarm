@@ -1,3 +1,4 @@
+# views.py
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
@@ -21,6 +22,15 @@ from .serializers import UserRegistrationSerializer, EcoStaffSerializer, UserSer
 import requests
 import logging
 import json
+import secrets
+from django.contrib.auth.tokens import default_token_generator
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes, force_str
+from django.utils import timezone
+from datetime import timedelta
+from rest_framework.pagination import PageNumberPagination
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.filters import SearchFilter, OrderingFilter
 
 logger = logging.getLogger(__name__)
 
@@ -164,39 +174,56 @@ def product_detail(request, product_id):
     return JsonResponse(product_data, safe=False)
 
 
+class RefreshTokenView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        token = request.auth
+        is_expired = timezone.now() > token.created + timedelta(days=7)
+        if is_expired:
+            token.delete()
+            token = Token.objects.create(user=request.user)
+        return Response({"token": token.key})
+
+
+class StandardResultsSetPagination(PageNumberPagination):
+    page_size = 10
+    page_size_query_param = 'page_size'
+    max_page_size = 100
+
+
 class UserRegistrationView(APIView):
     permission_classes = [AllowAny]
 
     def post(self, request, *args, **kwargs):
-        print('Полученные данные:', request.data)
+        logger.info('Received registration request')
         serializer = UserRegistrationSerializer(data=request.data, context={'request': request})
         if serializer.is_valid():
             user = serializer.save()
-            user.is_active = True  # Сразу активируем пользователя
+            user.is_active = True
             user.save()
 
-            # Создаем токен для пользователя
             token, created = Token.objects.get_or_create(user=user)
 
-            # Отправка письма администратору о регистрации нового пользователя
             try:
                 send_mail(
                     'Новый пользователь зарегистрирован',
                     f'Пользователь {user.username} зарегистрировался с email {user.email}.',
                     'koltsovaecoprint@yandex.ru',
-                    ['kumaradji@me.com'],  # Замените на email администратора
+                    ['kumaradji@me.com'],
                     fail_silently=False,
                 )
-                print('Письмо администратору отправлено о пользователе:', user.username)
+                logger.info(f'Admin notification sent for user: {user.username}')
             except Exception as e:
-                print('Ошибка при отправке письма администратору:', e)
+                logger.error(f'Error sending admin notification: {e}')
 
             return Response(
-                {"message": "Пользователь успешно зарегистрирован."},
+               {"message": "Пользователь успешно зарегистрирован.", "token": token.key},
                 status=status.HTTP_201_CREATED
             )
-        print('Ошибки сериализатора:', serializer.errors)
+        logger.error(f'Registration errors: {serializer.errors}')
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 class UserProfileView(APIView):
     permission_classes = [IsAuthenticated]
@@ -223,33 +250,42 @@ class AvatarUpdateView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class UserLoginView(APIView):
-    permission_classes = [AllowAny]
+class AvatarDeleteView(APIView):
+    permission_classes = [IsAuthenticated]
 
+    def delete(self, request):
+        profile = Profile.objects.get(user=request.user)
+        if profile.avatar:
+            profile.avatar.delete()
+        profile.avatar = None
+        profile.save()
+        return Response({"message": "Avatar deleted successfully"}, status=status.HTTP_200_OK)
+
+
+class UserLoginView(APIView):
     def post(self, request):
-        login = request.data.get('login')
+        username = request.data.get('username')
+        email = request.data.get('email')
         password = request.data.get('password')
 
-        user = User.objects.filter(email=login).first()
-        if user:
-            username = user.username
-        else:
-            username = login
+        if not (username or email) or not password:
+            return Response({'error': 'Пожалуйста, укажите имя пользователя/email и пароль'}, status=status.HTTP_400_BAD_REQUEST)
 
-        user = authenticate(username=username, password=password)
-        if user and user.is_active:
-            token, created = Token.objects.get_or_create(user=user)
-            user_data = {
-                'id': user.id,
-                'username': user.username,
-                'email': user.email,
-                'groups': [group.name for group in user.groups.all()],
-                'token': token.key
-            }
-            return Response({"message": "Успешный вход", "user": user_data}, status=status.HTTP_200_OK)
+        user = None
+        if email:
+            user = authenticate(request, email=email, password=password)
+        if not user and username:
+            user = authenticate(request, username=username, password=password)
+
+        if user:
+            token, _ = Token.objects.get_or_create(user=user)
+            return Response({
+                'token': token.key,
+                'user_id': user.pk,
+                'email': user.email
+            })
         else:
-            return Response({"message": "Неверные учетные данные или пользователь не активен"},
-                            status=status.HTTP_401_UNAUTHORIZED)
+            return Response({'error': 'Неверные учетные данные'}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class ChangePasswordView(APIView):
@@ -259,16 +295,13 @@ class ChangePasswordView(APIView):
         serializer = ChangePasswordSerializer(data=request.data)
         if serializer.is_valid():
             user = request.user
-            current_password = serializer.validated_data.get('currentPassword')
-            new_password = serializer.validated_data.get('newPassword')
-
-            if not user.check_password(current_password):
+            if not user.check_password(serializer.validated_data.get('currentPassword')):
                 return Response({"message": "Текущий пароль неверен"}, status=status.HTTP_400_BAD_REQUEST)
 
-            user.set_password(new_password)
+            user.set_password(serializer.validated_data.get('newPassword'))
             user.save()
             update_session_auth_hash(request, user)
-
+            logger.info(f"User {user.username} changed password")
             return Response({"message": "Пароль успешно изменен"}, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -283,18 +316,84 @@ class ResetPasswordView(APIView):
         if not user:
             return Response({"message": "Пользователь с таким email не найден"}, status=status.HTTP_400_BAD_REQUEST)
 
-        activation = Activation.objects.create(user=user)
-        reset_url = request.build_absolute_uri(reverse('activate_user', args=[activation.token]))
+        # Генерация временного пароля
+        temp_password = secrets.token_urlsafe(12)
+        user.set_password(temp_password)
+        user.save()
+
+        # Создание токена для сброса пароля
+        token = default_token_generator.make_token(user)
+        uid = urlsafe_base64_encode(force_bytes(user.pk))
+
+        # Формирование URL для сброса пароля
+        reset_url = request.build_absolute_uri(
+            reverse('password_reset_confirm', kwargs={'uidb64': uid, 'token': token})
+        )
+
+        # Отправка письма
+        subject = 'Сброс пароля на сайте Soulwarm'
+        message = f'''
+Здравствуйте!
+
+Вы запросили сброс пароля на сайте Soulwarm. 
+
+Ваш временный пароль: {temp_password}
+
+Для установки нового пароля, пожалуйста, перейдите по следующей ссылке:
+{reset_url}
+
+Если вы не запрашивали сброс пароля, проигнорируйте это письмо.
+
+С уважением,
+Команда Soulwarm
+        '''
 
         send_mail(
-            'Сброс пароля',
-            f'Для сброса пароля перейдите по ссылке: {reset_url}',
+            subject,
+            message,
             'koltsovaecoprint@yandex.ru',
             [user.email],
             fail_silently=False,
         )
 
-        return Response({"message": "Письмо для сброса пароля отправлено на ваш email"}, status=status.HTTP_200_OK)
+        return Response({
+            "message": "Инструкции по сбросу пароля отправлены на ваш email"
+        }, status=status.HTTP_200_OK)
+
+
+class ConfirmPasswordResetView(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request, uidb64, token):
+        try:
+            uid = force_str(urlsafe_base64_decode(uidb64))
+            user = User.objects.get(pk=uid)
+        except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+            user = None
+
+        if user is not None and default_token_generator.check_token(user, token):
+            new_password = request.data.get('new_password')
+            if new_password:
+                user.set_password(new_password)
+                user.save()
+                return Response({"message": "Password has been reset successfully"}, status=status.HTTP_200_OK)
+            else:
+                return Response({"error": "New password is required"}, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response({"error": "Invalid reset link"}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class UpdateEmailView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        new_email = request.data.get('email')
+        if new_email:
+            user = request.user
+            user.email = new_email
+            user.save()
+            return Response({"message": "Email updated successfully"}, status=status.HTTP_200_OK)
+        return Response({"error": "Email is required"}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class ActivateUser(APIView):
@@ -473,13 +572,15 @@ class CategoryDetailView(APIView):
         return Response(serializer.data)
 
 
-class ProductListView(APIView):
+class ProductListView(generics.ListAPIView):
+    queryset = EcoStaff.objects.all()
+    serializer_class = EcoStaffSerializer
     permission_classes = [AllowAny]
-
-    def get(self, request):
-        products = EcoStaff.objects.all()
-        serializer = EcoStaffSerializer(products, many=True)
-        return Response(serializer.data)
+    pagination_class = StandardResultsSetPagination
+    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
+    filterset_fields = ['category', 'price']
+    search_fields = ['title', 'description']
+    ordering_fields = ['price', 'created_at']
 
 
 class ProductDetailView(APIView):

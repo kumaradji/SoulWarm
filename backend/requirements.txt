@@ -1,6 +1,7 @@
 asgiref~=3.8
 autopep8~=2.1
 Django~=5.0
+django-filter
 django-cors~=0.1
 django-cors-headers~=4.3
 djangorestframework~=3.15

@@ -6,13 +6,27 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Инициализация переменных окружения
 env = environ.Env(
-    EMAIL_HOST=(str, 'localhost'),
+    DJANGO_ENV=(str, 'development'),
+    DEBUG=(bool, False),
+    SECRET_KEY=(str, 'default-secret-key'),
+    DJANGO_ALLOWED_HOSTS=(list, []),
+    DJANGO_ADMIN_USER=(str, 'admin'),
+    DJANGO_ADMIN_EMAIL=(str, 'admin@example.com'),
+    DJANGO_ADMIN_PASSWORD=(str, 'password'),
+    EMAIL_HOST=(str, 'smtp.yandex.ru'),
     EMAIL_PORT=(int, 587),
     EMAIL_USE_TLS=(bool, True),
     EMAIL_HOST_USER=(str, ''),
     EMAIL_HOST_PASSWORD=(str, ''),
-    DEFAULT_FROM_EMAIL=(str, 'webmaster@localhost'),
-    ADMIN_EMAIL=(str, 'admin@localhost'),
+    DEFAULT_FROM_EMAIL=(str, ''),
+    ADMIN_EMAIL=(str, ''),
+    DATABASE=(str, 'sqlite'),
+    DB_ENGINE=(str, 'django.db.backends.sqlite3'),
+    DB_NAME=(str, os.path.join(BASE_DIR, "db.sqlite3")),
+    DB_USER=(str, ''),
+    DB_PASSWORD=(str, ''),
+    DB_HOST=(str, ''),
+    DB_PORT=(str, ''),
     VIP_TELEGRAM_BOT_TOKEN=(str, ''),
     VIP_TELEGRAM_CHAT_ID=(str, ''),
     GENERAL_TELEGRAM_BOT_TOKEN=(str, ''),
@@ -21,6 +35,17 @@ env = environ.Env(
 
 # Чтение файла .env
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
+
+# Определение PRODUCTION
+PRODUCTION = env('DJANGO_ENV') == 'production'
+if PRODUCTION:
+    # Настройки для продакшена
+    DEBUG = False
+    # Другие продакшен-специфичные настройки
+else:
+    # Настройки для разработки
+    DEBUG = True
+    # Другие настройки для разработки
 
 # Настройки для Email
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -40,10 +65,9 @@ VIP_TELEGRAM_CHAT_ID = env('VIP_TELEGRAM_CHAT_ID')
 GENERAL_TELEGRAM_BOT_TOKEN = env('GENERAL_TELEGRAM_BOT_TOKEN')
 GENERAL_TELEGRAM_CHAT_ID = env('GENERAL_TELEGRAM_CHAT_ID')
 
-# Настройки для Django
-SECRET_KEY = 'django-insecure-xc7xublqj_u6jh&$+++e-yrsm$8ma*x_^4gxe%upd=-f7)1h_x'
-
-DEBUG = True
+# Основные настройки
+SECRET_KEY = env('SECRET_KEY')
+ALLOWED_HOSTS = env('DJANGO_ALLOWED_HOSTS')
 
 LOGGING = {
     'version': 1,
@@ -64,18 +88,9 @@ LOGGING = {
     },
 }
 
-# settings.py
-
-ALLOWED_HOSTS = [
-    'localhost',
-    '127.0.0.1',
-    '[::1]',
-    '0.0.0.0',
-    'ceea-2a00-1fa0-866c-282c-b4a3-321d-3ea7-5bde.ngrok-free.app'  # Добавьте ваш домен ngrok сюда
-]
-
-
-CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOWED_ORIGINS = env.list('CORS_ALLOWED_ORIGINS', default=['http://localhost:3000'])
+CORS_ALLOW_ALL_ORIGINS = env.bool('CORS_ALLOW_ALL_ORIGINS', default=False)
+CORS_ALLOW_CREDENTIALS = True
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -84,6 +99,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_filters',
     'rest_framework',
     'rest_framework.authtoken',
     'corsheaders',
@@ -101,6 +117,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
+    'main.middleware.DisableCSRFMiddleware',
 ]
 
 REST_FRAMEWORK = {
@@ -113,14 +130,6 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ],
 }
-
-CORS_ALLOWED_ORIGINS = [
-    'http://localhost:3000'
-]
-
-# CORS_ALLOW_ALL_ORIGINS = True  # Только для разработки!
-CORS_ALLOW_ALL_ORIGINS = False
-CORS_ALLOW_CREDENTIALS = True
 
 ROOT_URLCONF = 'soulwarm.urls'
 
@@ -142,38 +151,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'soulwarm.wsgi.application'
 
-# Путь, где будут собираться все статические файлы при выполнении collectstatic
-STATIC_URL = '/backend_static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-# Условие для базы данных в зависимости от окружения
-ENVIRONMENT = os.getenv('DJANGO_ENV', 'development')
-
-if ENVIRONMENT == 'production':
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': os.getenv('DB_NAME'),
-            'USER': os.getenv('DB_USER'),
-            'PASSWORD': os.getenv('DB_PASSWORD'),
-            'HOST': os.getenv('DB_HOST'),
-            'PORT': os.getenv('DB_PORT'),
-        }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': os.getenv('DB_ENGINE', 'django.db.backends.sqlite3'),
-            'NAME': os.getenv('DB_NAME', os.path.join(BASE_DIR, "db.sqlite3")),
-            'USER': os.getenv('DB_USER', 'root'),
-            'PASSWORD': os.getenv('DB_PASSWORD', 'password'),
-            'HOST': os.getenv('DB_HOST', ''),
-            'PORT': os.getenv('DB_PORT', ''),
-        }
-    }
+}
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -190,12 +173,17 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# Настройки интернационализации
 LANGUAGE_CODE = 'ru'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_TZ = True
+
+# Настройки статических файлов
+STATIC_URL = '/backend_static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
