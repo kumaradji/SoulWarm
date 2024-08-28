@@ -39,6 +39,7 @@ venv.bak/
 
 # Ignore built ts files
 frontend/build
+frontend/node_modules/
 
 # React Stuff
 .eslintcache
