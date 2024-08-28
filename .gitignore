@@ -20,18 +20,9 @@ yarn-error.log*
 __pycache__/
 db.sqlite3
 *.mo
-backend/*
+backend/venv
 !backend/main/migrations/
 !backend/media/
-
-# Environments
-.env
-.venv
-env/
-venv/
-ENV/
-env.bak/
-venv.bak/
 
 # IDEs
 .idea/
@@ -43,7 +34,6 @@ frontend/node_modules/
 
 # React Stuff
 .eslintcache
-frontend/public/*
 !frontend/public/images/
 !frontend/public/videos/
 
