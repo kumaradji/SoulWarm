@@ -11,15 +11,17 @@ const Profile = () => {
   const [avatarUrl, setAvatarUrl] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchUserDetails = async () => {
+      setIsLoading(true);
       try {
         await fetchUserData();
 
         if (user) {
           try {
-            const avatarResponse = await fetch('/api/profile/avatar/', {
+            const avatarResponse = await fetch('http://localhost:8000/api/profile/avatar/', {
               headers: {
                 'Authorization': `Token ${localStorage.getItem('token')}`
               }
@@ -27,7 +29,7 @@ const Profile = () => {
 
             if (avatarResponse.ok) {
               const data = await avatarResponse.json();
-              setAvatarUrl(`http://localhost${data.avatar}`);
+              setAvatarUrl(`http://localhost:8000${data.avatar}`);
             } else {
               console.error('Error fetching avatar:', avatarResponse.statusText);
             }
@@ -38,6 +40,8 @@ const Profile = () => {
         }
       } catch (error) {
         console.error('Error fetching user data:', error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -52,7 +56,7 @@ const Profile = () => {
   };
 
   const handleMasterclassAccess = (masterclass) => {
-    if (user.groups.includes('VIP')) {
+    if (user?.groups?.includes('VIP')) {
       navigate(`/masterclass`);
     } else {
       setModalMessage('Доступ к этому мастер-классу закрыт. Пожалуйста, оплатите для доступа.');
@@ -78,7 +82,7 @@ const Profile = () => {
       formData.append('avatar', avatar);
 
       try {
-        const response = await fetch('/api/profile/avatar/', {
+        const response = await fetch('http://localhost:8000/api/profile/avatar/', {
           method: 'PUT',
           headers: {
             'Authorization': `Token ${localStorage.getItem('token')}`
@@ -98,8 +102,12 @@ const Profile = () => {
     }
   };
 
-  if (!user) {
+  if (isLoading) {
     return <div>Загрузка...</div>;
+  }
+
+  if (!user) {
+    return <div>Пользователь не найден. Пожалуйста, <Link to="/auth">войдите в систему</Link>.</div>;
   }
 
   return (
@@ -138,7 +146,7 @@ const Profile = () => {
 
       <div className={styles.cardMasterClasses}>
         <h3>Доступные мастер-классы</h3>
-        {user.groups.includes('VIP') ? (
+        {user.groups?.includes('VIP') ? (
           <ul>
             <li onClick={() => handleMasterclassAccess('marena-garden')}>
               <button className={styles.masterclass}>Цветной фон</button>

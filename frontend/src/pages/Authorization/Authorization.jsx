@@ -1,9 +1,9 @@
-// Authorization.jsx
 import React, { useState, useEffect } from 'react';
-import { useNavigate, Link, useLocation } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import styles from './Authorization.module.scss';
 import Modal from '../../components/Modal/Modal.jsx';
+import { handleLogin, handleRegistration, handleResetPassword } from './authFunctions';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 const Authorization = ({ initialMode = 'login', setAuthMode }) => {
@@ -13,31 +13,19 @@ const Authorization = ({ initialMode = 'login', setAuthMode }) => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
+  const [loginAttempts, setLoginAttempts] = useState(0);
   const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
-
   const navigate = useNavigate();
-  const location = useLocation();
-
-  const {
-    isLoggedIn,
-    login,
-    handleRegistration,
-    handleResetPassword,
-    error,
-    setError,
-    modalMessage,
-    setModalMessage,
-    isModalOpen,
-    setIsModalOpen,
-    loginAttempts
-  } = useAuth();
+  const { isLoggedIn, login } = useAuth();
 
   useEffect(() => {
     if (isLoggedIn && mode !== 'changePassword') {
-      const from = location.state?.from || '/';
-      navigate(from, { replace: true });
+      navigate('/');
     }
-  }, [isLoggedIn, navigate, mode, location]);
+  }, [isLoggedIn, navigate, mode]);
 
   useEffect(() => {
     if (setAuthMode) {
@@ -55,52 +43,42 @@ const Authorization = ({ initialMode = 'login', setAuthMode }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError(null);
+
     if (mode === 'register' && !validateUsername(username)) {
-      setModalMessage('Имя пользователя не должно содержать пробелов');
       setIsModalOpen(true);
+      setModalMessage('Имя пользователя не должно содержать пробелов');
       return;
     }
-    switch (mode) {
-      case 'login':
-        try {
-          const success = await login(email || username, password);
-          if (success) {
-            navigate('/');
-          }
-        } catch (error) {
-          console.error('Login error:', error);
-        }
-        break;
-      case 'register':
-        if (isCheckboxChecked) {
-          if (password !== confirmPassword) {
-            setError('Пароли не совпадают');
-            return;
-          }
-          const result = await handleRegistration(username, email, password);
-          if (result.success) {
-            setModalMessage(result.message);
-            setIsModalOpen(true);
-            setMode('login');
-          } else {
-            setError(result.error);
-          }
-        } else {
-          setError('Пожалуйста, дайте согласие на обработку персональных данных');
-        }
-        break;
-      default:
-        console.error('Неизвестный режим:', mode);
-    }
-  };
 
-  const handleResetPasswordClick = async () => {
-    const result = await handleResetPassword(email);
-    if (result.success) {
-      setModalMessage(result.message);
-      setIsModalOpen(true);
-    } else {
-      setError(result.error);
+    try {
+      switch (mode) {
+        case 'login':
+          await handleLogin(email, username, password, login, navigate, setError, setLoginAttempts);
+          break;
+        case 'register':
+          if (isCheckboxChecked) {
+            await handleRegistration(
+              password,
+              confirmPassword,
+              username,
+              email,
+              setError,
+              setModalMessage,
+              setIsModalOpen,
+              login,
+              navigate
+            );
+          } else {
+            setError('Пожалуйста, дайте согласие на обработку персональных данных');
+          }
+          break;
+        default:
+          console.error('Неизвестный режим:', mode);
+      }
+    } catch (error) {
+      console.error('Ошибка при обработке формы:', error);
+      setError('Произошла ошибка. Пожалуйста, попробуйте еще раз.');
     }
   };
 
@@ -181,7 +159,8 @@ const Authorization = ({ initialMode = 'login', setAuthMode }) => {
                 <label htmlFor="agreement">
                   Я даю согласие на обработку персональных данных и соглашаюсь с
                   <br/>
-                  <Link className={styles.privacyPolicyLink} to="/privacy-policy"> Политикой обработки персональных данных</Link>
+                  <Link className={styles.privacyPolicyLink} to="/privacy-policy"> Политикой обработки персональных
+                    данных</Link>
                 </label>
               </div>
             )}
@@ -200,8 +179,9 @@ const Authorization = ({ initialMode = 'login', setAuthMode }) => {
       </div>
       {loginAttempts >= 5 && (
         <div className={styles.passwordOptions}>
-          <button type="button" onClick={handleResetPasswordClick}>
-            Сбросить пароль
+          <button type="button"
+                  onClick={(e) => handleResetPassword(e, email, setError, setModalMessage, setIsModalOpen, setMode)}>Сбросить
+            пароль
           </button>
         </div>
       )}

@@ -49,13 +49,21 @@ else:
 
 # Настройки для Email
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = env('EMAIL_HOST')
-EMAIL_PORT = env('EMAIL_PORT')
-EMAIL_USE_TLS = env('EMAIL_USE_TLS')
-EMAIL_HOST_USER = env('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
-DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL')
-ADMIN_EMAIL = env('ADMIN_EMAIL')
+# EMAIL_HOST = env('EMAIL_HOST')
+# EMAIL_PORT = env('EMAIL_PORT')
+# EMAIL_USE_TLS = env('EMAIL_USE_TLS')
+# EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+# EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
+# DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL')
+# ADMIN_EMAIL = env('ADMIN_EMAIL')
+
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'koltsovaecoprint@yandex.ru'
+EMAIL_HOST_PASSWORD ='uxftjmkthdxbgfsj'  # Пароль от почтового ящика
+DEFAULT_FROM_EMAIL = 'koltsovaecoprint@yandex.ru'
+ADMIN_EMAIL = 'kumaradji@me.com'
 
 # Настройки для VIP Telegram бота
 VIP_TELEGRAM_BOT_TOKEN = env('VIP_TELEGRAM_BOT_TOKEN')
@@ -91,6 +99,7 @@ LOGGING = {
 CORS_ALLOWED_ORIGINS = env.list('CORS_ALLOWED_ORIGINS', default=['http://localhost:3000'])
 CORS_ALLOW_ALL_ORIGINS = env.bool('CORS_ALLOW_ALL_ORIGINS', default=False)
 CORS_ALLOW_CREDENTIALS = True
+SESSION_COOKIE_SAMESITE = 'Lax'  # или 'None' если используете HTTPS
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -106,7 +115,6 @@ INSTALLED_APPS = [
     'drf_yasg',
     'main',
 ]
-
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
